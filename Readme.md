@@ -1,6 +1,6 @@
 **CASMOE** - An experimental Case and ASMO corpus Editor
 
-*Developed initially as a final project by Samuel Goh (ft19226), MSc Computer Science @ University of Bristol.*
+*Developed initially as a final project by Samuel Goh (ft19226), MSc Computer Science @ University of Bristol.Now ported to Django*
 
 Introduction
 
@@ -10,8 +10,8 @@ CASMOE is a lightweight web tool for editing the UKSC/UKHL annotated corpus prov
 
 To-do list:
 1. [COMPLETE]Port HTML files
-2. Write selected case to database
-3. Read selected case from database
+2. Write selected case to database 
+3. Read selected case from database 
 4. navigate between search and edit page
 ---------
 5. write edit entries to database
