@@ -1,0 +1,103 @@
+/*MAIN*/
+.main {
+    overflow: hidden;
+}
+
+.btn {
+    max-width: 15vw;
+}
+
+.root {
+    margin: auto;
+    max-width: 1000px;
+}
+
+/*Index*/
+.HeaderContainer {
+    margin: auto;
+    max-height: 30vh;
+    min-width: 1000px;
+}
+
+.BannerImgSearch{
+    max-height: 30vh;
+    width: 1000px;
+    object-fit: cover;
+}
+
+.HeaderTextContainer {  
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 300px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: large;     
+}
+
+/*LINE*/
+#main #sidebar #edit{
+    min-height: 100vh;
+    transition:.5s;
+}
+
+#mainbody{
+    overflow-y:scroll;
+    height:90vh;
+}
+
+#edit {
+    position:fixed;
+    top:0;
+    right:0;
+    opacity:0%;
+    transition:.4s;
+}
+
+#toggle {
+    position:fixed;
+    max-width:10vw;
+    bottom:5vh;
+    right: 5vw;
+}
+
+#editbody{
+    overflow-y:scroll;
+    max-height:80vh;
+}
+
+#popout{
+    position: fixed;    
+    top: 5%;
+    right: 0;      
+    width: 0vw; 
+    max-width: 400px;
+    opacity: 0%;
+    transition: .5s;     
+}
+
+#popoutbody{
+    overflow-y:scroll;
+    max-height: 70vh;
+}
+
+#btnedit {
+    position: fixed;
+    right:5vh;  
+    bottom:5vh;
+    max-width: 15vw;
+    height: 30px;
+}
+
+/*ASMO*/
+#Quotes{
+    font-style: italic;
+}
+
+#CaseChart{
+    max-height:80vh;
+    max-width:40vw;
+    align-content: center;
+}
