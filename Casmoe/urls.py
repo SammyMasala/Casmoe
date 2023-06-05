@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 from search import views as search_views
+from edit import views as edit_views
 
 urlpatterns = [
     path('', search_views.frontpage),
+    path('view/', edit_views.viewcase),
     path('admin/', admin.site.urls),
 ]

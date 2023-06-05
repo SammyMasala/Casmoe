@@ -14,6 +14,8 @@ To-do list:
 3. Read selected case from database 
 4. navigate between search and edit page
 ---------
+4a. Refactor: Testing for previous functionality
+---------
 5. write edit entries to database
 6. create 'view change' page
 7. read selected case and edited entries
