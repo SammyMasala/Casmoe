@@ -90,7 +90,8 @@ function listCases(str, arr){
             elem.innerHTML = text;
             elem.addEventListener("click", function(e){ 
                 var index = e.target.name;
-                changePage(arr[index]);
+                writeCasetoDjango(arr[index]);
+                // changePage("case.html");
             });
 
             row.appendChild(elem);            

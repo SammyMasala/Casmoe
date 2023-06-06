@@ -42,16 +42,31 @@ function loadContent(str){
         case "search":
             showSearch();
             break;
-        case "edit":
-            showEdit();
-            break;
+        // case "edit": /// Deprecated: pending rewrite
+        //     showEdit();
+        //     break;
     }
 }
 
-function changePage(_case){
-    if(debug){
-        console.log("DEBUG: Init changePage()")
-    }
-    localStorage.setItem("Case", JSON.stringify(_case));
-    window.location.href = "case.html";
+
+function writeCasetoDjango(_case){
+    $(document).ready(function(){
+        $.ajax({
+            method: "POST",
+            url:"select-case/",
+            data:{"SelectedCase": JSON.stringify(_case)},
+            success: function (data){
+                alert("yay");
+                /*window.location.href = "case.html"*/
+
+            },
+            error: function (data) {
+                alert("mission failed");
+            }
+        });
+    });
+}
+
+function changePage(dir){
+    window.location.href = dir;
 }
