@@ -9,7 +9,7 @@ function loadLine(){
     lineDrawMain("mainbody");
     lineDrawEdit("editbody");
     setMode("edit", "main", "sidebar", "editbtn");
-    lineFillFields(JSON.parse(localStorage.getItem("Case")), "colmain", "editbtn", "editbody", "popout", "popoutbody", "popoutfooter", "pagecontainer");
+    lineFillFields(JSON.parse(localStorage.getItem("Case")), "colmain", "editbtn", "editbody", "popout", "popoutbody", "popoutfooter", "pagecontainer"); // Fix this mess!!!
 }
 
 function lineDrawMain(_mainBody){

@@ -1,6 +1,6 @@
 from django.db import models
 
-class ExtractedCase (models.Model):
+class CaseLine (models.Model):
     case_id = models.TextField()
     asmo = models.TextField()
     asmo_sent_id = models.TextField()

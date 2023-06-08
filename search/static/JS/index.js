@@ -48,13 +48,34 @@ function loadContent(str){
     }
 }
 
+function getCookie(name){
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 
-function writeCasetoDjango(_case){
+}
+
+
+function writeCasetoDjango(selectedCase){
+    var csrf = getCookie('csrftoken');
+
     $(document).ready(function(){
         $.ajax({
             method: "POST",
-            url:"select-case/",
-            data:{"SelectedCase": JSON.stringify(_case)},
+            url:"save-case/",
+            headers: {
+                'X-CSRFToken': csrf
+            },
+            data:{"SelectedCase": JSON.stringify(selectedCase)},
             success: function (data){
                 alert("yay");
                 /*window.location.href = "case.html"*/
@@ -68,5 +89,5 @@ function writeCasetoDjango(_case){
 }
 
 function changePage(dir){
-    window.location.href = dir;
+    // window.location.href = dir;
 }
