@@ -1,38 +1,25 @@
 "use strict"
 
 function showSearch(){
-
-    drawLayoutSearch();
     fillSearch();    
 }
 
-function drawLayoutSearch(){
-    var cont = document.getElementById("MainContent");
-    if(!cont){
+function clearContent(){
+    var container = document.getElementById("MainContent");
+    if(!container){
         console.log("Error: Element 'MainContent' not found!");
         return;
     }
 
-    var row = document.createElement("div");
-    row.className = "row";
-
-    var input = document.createElement("input");
-    input.type = "text";
-    input.id = "CaseName";
-    input.placeholder = "Case name....";
-
-    row.appendChild(input);
-    cont.appendChild(row);
-
-    row = document.createElement("div");
-    row.className = "row d-grid gap-1";
-    row.id = "ResultBox";
-
-    cont.appendChild(row);
+    var child = container.lastElementChild;
+    while(child){
+        container.removeChild(child);
+        child = container.lastElementChild;
+    }
 }
 
 function fillSearch(){    
-    loadCSV("CorpusField").then((text) => {
+    getCases("CorpusField").then((text) => {
         var corpus = text;
         if(!corpus){
             console.log("Error: Failed to load Corpus file!");
@@ -49,10 +36,6 @@ function fillSearch(){
 }
 
 function listCases(str, arr){
-    if(debug){
-        console.log("DEBUG: Init listCases()");
-    }
-
     const contentContainer = document.getElementById("ResultBox"); 
     if (!contentContainer){
         console.log("Error: Element 'resultBox' not found!");

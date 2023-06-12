@@ -24,6 +24,5 @@ urlpatterns = [
     path('', search_views.frontpage),
     path('save-case/', search_views.save_case, name="save-case"),
     path('case.html/', edit_views.view_case, name="view-case"),
-    path('view-case/', search_views.view_case),
     path('admin/', admin.site.urls),
 ]
