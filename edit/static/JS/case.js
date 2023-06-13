@@ -1,36 +1,36 @@
 "use strict"
 this.addEventListener("load", function(){
-    start("btntohome", "btntoline", "btntoasmo");
+    start();
 });
 
-function start(_homebtn, _linebtn, _asmobtn){
-    var btnHome = document.getElementById(_homebtn);
+function start(){
+    var btnHome = document.getElementById("btntohome");
     if(!btnHome){
         console.log("ERROR: btntohome not found!");
         return;
     }
     btnHome.addEventListener("click", backToHome);
 
-    var btnLine = document.getElementById(_linebtn);
+    var btnLine = document.getElementById("btntoline");
     if(!btnLine){
         console.log("ERROR: btntoline not found!");
         return;
 
     }
     btnLine.addEventListener("click", function(){
-        loadContent("line");
+        loadLine();
     });
 
-    var btnASMO = document.getElementById(_asmobtn);
-    if(!btnASMO){
-        console.log("ERROR: btntoasmo not found!");
-        return;
-    }
-    btnASMO.addEventListener("click", function(){
-        loadContent("asmo");
-    });
+    // var btnASMO = document.getElementById(_asmobtn);
+    // if(!btnASMO){
+    //     console.log("ERROR: btntoasmo not found!");
+    //     return;
+    // }
+    // btnASMO.addEventListener("click", function(){
+    //     loadContent("asmo");
+    // });
 
-    loadContent("line");
+    loadLine();
 }
 
 function clearContent(){
@@ -44,22 +44,6 @@ function clearContent(){
     while(child){
         cont.removeChild(child);
         child = cont.lastElementChild;
-    }
-}
-
-function loadContent(str){
-    clearContent();
-
-    switch(str){
-        default:
-            console.log("ERROR: Content " + str + " undefined!");
-            break;
-        case "line":
-            loadLine();
-            break;
-        case "asmo":
-            asmoLoad(getCaseData("Case"));
-            break;
     }
 }
 

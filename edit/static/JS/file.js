@@ -1,74 +1,67 @@
 "use strict"
-var debug = 1;
-
-function csvtoArray(str){
-    if(debug){
-        console.log("DEBUG: Init csvtoArray()");
-    }
-
-    var headers = str.slice(0, str.indexOf("\n")).split(",");
-    localStorage.setItem("Headers", JSON.stringify(headers));
-  
-    var rows = str.slice(str.indexOf("\n") + 1).split("\n");
-    rows = splitSentence(splitRowElements(rows));
-
-    const cases = splitCases(rows);
-    return cases;
-}
-
-function readFile(field) {
-    return new Promise(function(resolve) {
-        if (debug){
-            console.log("DEBUG: Init readFile()");
-        }
-
-        const file = document.getElementById(field).files[0];
-        if(!file){
+//Reads .csv file provided.
+function readFile(elemId) {
+    return new Promise(function(resolve){
+        const csv = document.getElementById(elemId).files[0];
+        if(!csv){
             alert("ERROR: Null file received!")
-        }else if(file.type != "text/csv"){
+        }else if(csv.type != "text/csv"){
             alert("ERROR: Invalid file received!")
         }else{
-            const fileLoaded = new Promise((resolve) =>{
-                const reader = new FileReader();
-                reader.addEventListener("load", function(e){
-                    var text = e.target.result;    
-                    text = csvtoArray(text);                                  
-                    resolve(text);           
+            const file = new Promise((resolve) =>{
+                const fReader = new FileReader();
+                fReader.addEventListener("load", function(e){
+                    var fileString = e.target.result;    
+                    var casesArray = csvtoArray(fileString);                                  
+                    resolve(casesArray);           
                 })
-                reader.readAsText(file);            
+                fReader.readAsText(csv);            
             });
 
-            fileLoaded.then((text) =>{
-                
-                resolve(text);
+            file.then((casesArray) =>{
+                resolve(casesArray);
             });
         }    
     });
 }
 
-function loadCSV(field){
+function getCases(elemId){
     return new Promise(function(resolve){
         const loadFiles = new Promise((resolve) =>{
-            readFile(field).then((text) => {
-                resolve(text); 
+            readFile(elemId).then((casesArray) => {
+                resolve(casesArray); 
             });               
         });
         
-        loadFiles.then((text) => {
-            if(!text){
+        loadFiles.then((casesArray) => {
+            if(!casesArray){
                 console.log("Error: File read failed! Details: Corpus");
                 return;
             }
-            resolve(text);      
+            resolve(casesArray);      
         }); 
     });       
 }
 
-function splitRowElements(rows){
-    if(debug){
-        console.log("DEBUG: Init splitRowElements()");
-    }
+//Writes csv to JS array.
+function csvtoArray(caseString){
+    var headers = caseString.slice(0, caseString.indexOf("\n")).split(",");
+    localStorage.setItem("Headers", JSON.stringify(headers));
+  
+    var caseRows = splitRows(caseString); 
+    caseRows = splitElements(caseRows);
 
+    var caseLines = splitSentence(caseRows);
+
+    const cases = splitCases(caseLines);
+    return cases;
+}
+
+function splitRows(caseString){
+    return caseString.slice(caseString.indexOf("\n") + 1).split("\n");
+}
+
+function splitElements(rows){
     for(var i in rows){
         rows[i] = rows[i].split(",");
         for (var j in rows[i]){
@@ -84,10 +77,6 @@ function getCaseData(str){
 }
 
 function splitSentence(rows){
-    if(debug){
-        console.log("DEBUG: Init splitSentence()");
-    }
-
     var roles = ["<new-case>", "TEXTUAL", "FACT", "PROCEEDINGS", 
     "FRAMING", "BACKGROUND", "NONE", "DISPOSAL", "<prep-date>"];
 
@@ -122,10 +111,6 @@ function getText(num){
 }
 
 function splitCases(rows){
-    if(debug){
-        console.log("DEBUG: Init splitCases()");
-    }
-
     for(var i=0;i<rows.length;i++){
         if(!rows[i][getHeaderIndex("case_id")]){
             rows.splice(i, 1);

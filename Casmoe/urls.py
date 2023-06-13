@@ -23,6 +23,7 @@ from edit import views as edit_views
 urlpatterns = [
     path('', search_views.frontpage),
     path('save-case/', search_views.save_case, name="save-case"),
-    path('case.html/', edit_views.view_case, name="view-case"),
+    path('case.html/get-case/', edit_views.get_case, name='get-case'),
+    path('case.html/', edit_views.edit_page, name="edit-page"),
     path('admin/', admin.site.urls),
 ]

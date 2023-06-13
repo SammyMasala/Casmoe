@@ -1,119 +1,82 @@
 "use strict"
-var debug = 1;
-
 function loadLine(){
-    if(debug){
-        console.log("DEBUG: Init loadLine()");
-    }    
-    
-    lineDrawMain("mainbody");
-    lineDrawEdit("editbody");
-    setMode("edit", "main", "sidebar", "editbtn");
-    lineFillFields(JSON.parse(localStorage.getItem("Case")), "colmain", "editbtn", "editbody", "popout", "popoutbody", "popoutfooter", "pagecontainer"); // Fix this mess!!!
+    setMode();
+    getCaseFromDatabase().then((caseData) => {
+        lineFillFields(caseData);    
+    });
 }
 
-function lineDrawMain(_mainBody){
-    var cont = document.getElementById(_mainBody);
-    if(!cont){
-        console.log("Error: mainbody not found");
-        return;
-    }
-
-    var row = createDiv("row", "");
-    var col = createDiv("col border", "colmain");
-
-    row.appendChild(col);
-    cont.appendChild(row); 
-}
-
-function lineDrawEdit(_editBody){
-    var cont = document.getElementById(_editBody);   
-    if(!cont){
-        console.log("Error: editbody not found");
-        return;
-    }
-    
-    var row = createDiv("row", "edithotbar");
-    cont.appendChild(row);
-    
-    row = createDiv("row", "edittext");
-    cont.appendChild(row);
-}
-
-function lineFillFields(data, _colMain, _btnEdit, _edit, _popout, _popoutbody, _popoutfooter, _pagecontainer){
-    if(!data){
+function lineFillFields(caseData){
+    if(!caseData){
         console.log("Error loading 'Case' data!");
         return;
     }
 
-    var c = document.getElementById(_colMain);
-    if(!c){
-        console.log("ERROR: failed to retrieve ColMain element!");
+    var mainCol = document.getElementById("colmain");
+    if(!mainCol){
+        console.log("ERROR: failed to retrieve colmain element!");
         return;
     }
 
-    for(var i in data){
-        const s = document.createElement("button");
-        s.className = "row mb-3 border border-light text-start";
-        s.id = data[i][getHeaderIndex("sentence_id")];
-        s.innerHTML = data[i][getHeaderIndex("sentence_id")] + ". " + data[i][getHeaderIndex("text")];
-        s.addEventListener("click", function(e){
-            var val = document.getElementById(_btnEdit).value;
-            if(val == "false"){
-                fillPopout(_popoutbody, _popoutfooter,_btnEdit, _pagecontainer, _popout, data, e.target.id);
-                openPopout(_btnEdit, _pagecontainer, _popout);
-            }else if(val == "true"){
-                fillEdit(_edit, data, e.target.id);
+    for(var i in caseData){
+        const lineBtn = document.createElement("button");
+        lineBtn.className = "row mb-3 border border-light text-start";
+        lineBtn.id = caseData[i].sentence_id;
+        lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
+        lineBtn.addEventListener("click", function(e){
+            var btnVal = document.getElementById("btnEdit").value;
+            if(btnVal == "false"){
+                fillPopout(caseData, e.target.id);
+                openPopout();
+            }else if(btnVal == "true"){
+                fillEdit(caseData, e.target.id);
             }            
         });        
-        c.appendChild(s);
-
+        mainCol.appendChild(lineBtn);
     }
     
 }
 
-function fillPopout(_popoutbody, _popoutfooter, _btnEdit, _pagecontainer, _popout, data, index){
-    var popoutbody = document.getElementById(_popoutbody);
-    if(!popoutbody){
+function fillPopout(caseData, index){
+    var popoutBody = document.getElementById("popoutbody");
+    if(!popoutBody){
         console.log("ERROR: no popoutbody found!");
         return;
     }
 
-    var popoutfooter = document.getElementById(_popoutfooter);
-    if(!popoutfooter){
+    var popoutFooter = document.getElementById("popoutfooter");
+    if(!popoutFooter){
         console.log("ERROR: no popoutfooter found!");
         return;
     }
 
-    var details = data[index];
+    var details = caseData[index];
 
     //clear previous data
-    if(!clearChild(popoutbody)){
+    if(!clearChild(popoutBody)){
         return;
     }
-    if(!clearChild(popoutfooter)){
+    if(!clearChild(popoutFooter)){
         return;
     }
 
     //load new data
-    for(var i=0;i<details.length;i++){
-        var e = createDiv("row bg-transparent text-start", "");
-        var text = "";
-        if (i == getHeaderIndex("judge")){ // Judge                
-            text = "Judge: " + details[5].toUpperCase();
-        }else if(i == getHeaderIndex("text")){ // Sentence
-            e.style.fontStyle = "italic";
-            text = details[getHeaderIndex("text")];
-        }else if(i == getHeaderIndex("role")){ // Role                 
-            text = "Role: " + details[i].toUpperCase();
-        }else if(i == getHeaderIndex("align")){ // Summary alignment
-            text = "Aligns with sentence " + details[i] + " of summary.";
-        }   
+    var newField = createDiv("row bg-transparent text-start", "");
+    var text = "";
+    if (i == getHeaderIndex("judge")){ // Judge                
+        text = "Judge: " + details[5].toUpperCase();
+    }else if(i == getHeaderIndex("text")){ // Sentence
+        newField.style.fontStyle = "italic";
+        text = details[getHeaderIndex("text")];
+    }else if(i == getHeaderIndex("role")){ // Role                 
+        text = "Role: " + details[i].toUpperCase();
+    }else if(i == getHeaderIndex("align")){ // Summary alignment
+        text = "Aligns with sentence " + details[i] + " of summary.";
+    }   
 
-        if(text){
-            e.appendChild(document.createTextNode(text));
-            popoutbody.appendChild(e);
-        }
+    if(text){
+        newField.appendChild(document.createTextNode(text));
+        popoutBody.appendChild(newField);
     }
 
     //Close popout    
@@ -121,13 +84,13 @@ function fillPopout(_popoutbody, _popoutfooter, _btnEdit, _pagecontainer, _popou
     btn.className = "btn btn-primary"
     btn.innerHTML = "Close";
     btn.addEventListener("click", function(){
-        closePopout(_btnEdit, _pagecontainer, _popout);
+        closePopout();
     });
-    popoutfooter.appendChild(btn);
+    popoutFooter.appendChild(btn);
 }
 
-function fillEdit(_edit, data, index){
-    var edit = document.getElementById(_edit);
+function fillEdit(data, index){
+    var edit = document.getElementById("edittext");
     if(!edit){
         console.log("ERROR: no EditText found!");
     }
@@ -169,7 +132,7 @@ function fillEdit(_edit, data, index){
     }    
     
     btn.addEventListener("click", function(e){
-        return FillEdit("edittext", data, parseInt(e.target.value) + 1);
+        return FillEdit(data, parseInt(e.target.value) + 1);
     });
     col.appendChild(btn);
     row.appendChild(col);
@@ -283,41 +246,76 @@ function scrolltoText(id){
 }
 
 
-function setMode(_edit, _main, _sidebar, _toggle){    
-    var edit = document.getElementById(_edit);
+function setMode(){    
+    var edit = document.getElementById("edit");
     if(!edit){
         console.log("Error: edit not found!");
         return;
     }
-    var main = document.getElementById(_main);
+    var main = document.getElementById("main");
     if(!main){
         console.log("Error: main not found!");
         return;
     }
-    var sidebar = document.getElementById(_sidebar);
+    var sidebar = document.getElementById("sidebar");
     if(!sidebar){
         console.log("Error: sidebar not found!");
         return;
     }
 
-    var toggle = document.getElementById(_toggle);
+    var toggle = document.getElementById("editbtn");
     if(!toggle){
-        console.log("Error: toggle not found!");
+        console.log("Error: editbtn not found!");
         return;
     }
 
     toggle.addEventListener("click", function(){
-        changeMode(_edit, _main, _sidebar, _toggle);
+        changeMode(edit, main, sidebar, toggle);
     });
 }
 
-function changeMode(_edit, _main, _sidebar, _toggle){
-    var toggle = document.getElementById(_toggle);
-    if (!toggle){
-        console.log("Element editbtn not found!");
-        return;
+function getCookie(name){
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
+    return cookieValue;
 
+}
+
+function getCaseFromDatabase(){
+    return new Promise((resolve) => {
+        var csrf = getCookie('csrftoken');
+
+        $(document).ready(function(){
+            $.ajax({
+                method: "GET",
+                url:"get-case/",
+                headers: {
+                    'X-CSRFToken': csrf
+                },
+                success: function (response){
+                    alert("yay");
+                    resolve(response);
+                },
+                error: function () {
+                    alert("mission failed");
+                    return;
+                }
+            });
+        });
+    });    
+}
+
+
+function changeMode(edit, main, sidebar, toggle){
     if(toggle.value == "true"){
         toggle.className = "btn btn-primary text-white bg-primary";
         toggle.innerHTML = "Edit: OFF";            
@@ -345,35 +343,35 @@ function changeMode(_edit, _main, _sidebar, _toggle){
     }   
 }
 
-function openPopout(_editbtn, _pagecontainer, _popout){
-    if(document.getElementById(_editbtn).value == "true"){
+function openPopout(){
+    if(document.getElementById("editbtn").value == "true"){
         return;
     }
 
-    var body = document.getElementById(_pagecontainer);
+    var body = document.getElementById("pagecontainer");
     body.style.opacity = "50%";
     body.style.pointerEvents = "none";
 
-    var toggle = document.getElementById(_editbtn);
+    var toggle = document.getElementById("editbtn");
     toggle.style.opacity = "20%";
     toggle.style.pointerEvents = "none";
 
-    var popout = document.getElementById(_popout);
+    var popout = document.getElementById("popout");
     popout.style.width="40vw";
     popout.style.opacity="100%";
     popout.style.pointerEvents = "auto";
 }
 
-function closePopout(_editbtn, _pagecontainer, _popout){
-    var body = document.getElementById(_pagecontainer);
+function closePopout(){
+    var body = document.getElementById("pagecontainer");
     body.style.opacity = "100%";
     body.style.pointerEvents = "auto";
 
-    var toggle = document.getElementById(_editbtn);
+    var toggle = document.getElementById("editbtn");
     toggle.style.opacity = "100%";
     toggle.style.pointerEvents = "auto";
 
-    var popout = document.getElementById(_popout);
+    var popout = document.getElementById("popout");
     popout.style.width="0";
     popout.style.opacity="0%";
     popout.style.pointerEvents = "none";
