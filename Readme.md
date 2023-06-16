@@ -10,11 +10,12 @@ CASMOE is a lightweight web tool for editing the UKSC/UKHL annotated corpus prov
 
 To-do list:
 1. [COMPLETE]Port HTML files
-2. Write selected case to database 
-3. Read selected case from database 
+2. [COMPLETE]Write selected case to database 
+3. [COMPLETE]Read selected case from database 
 4. navigate between search and edit page
 ---------
 4a. Refactor: Testing for previous functionality
+4b. UI rework. See UIRework.txt
 ---------
 5. write edit entries to database
 6. create 'view change' page

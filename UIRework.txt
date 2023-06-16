@@ -1,0 +1,19 @@
+Design brief for UI Rework
+
+Summary: 
+
+Casmoe's ordinary user interface consists of 2 main pages: Home and Case View.
+
+- Home is the default page when users first load the site. By default, the home page will show a large viewport length input field to upload the .csv file. Upon uploading, the field moves to the top of the page and case browser container becomes visible. This container consists of a left and right panel. the left "CaseList" panel lists the cases found in the uploaded csv file. This panel should occupy at least 70% of the viewport width to denote it as the primary panel. The right "Preview" panel shows a simplified Case view that allows users to verify that they have selected the intended case by previewing it. Optionally, a simple searchbar may be implemented for users to perform light search tasks. After a case is selected, a large button should be displayed to "Go to Case View"
+
+- Case View is the focus page of the Casmoe tool. The page leads with a header containing 3 tabs, "Overview", "Text", and "Analysis". Briefly, "Overview" is the leftmost default tab, and shows a simplified unified display of the "Text" and "Analysis" panels. The "Text" panel shows the selected case in Line View, i.e broken up into individual line entries. These entries can be clicked/hovered over to view annotation information in a popout box. The "Analysis" panel displays a number of charts and graphics that are generated using the case annotation data. 
+
+Super User/Editor functionality:
+
+A super user login option will be available at the top right of the screen. When logged in as a super user, users will be treated to an entirely independent version of the tool, the Casmoe Editor. This editor site version will have a different color palette to denote the distinction from the normal user experience. The Editor user interface consists of 3 pages: Home, Edit and Review.
+
+- the Home page for super users will be similar in function to the normal user version, but much stripped down. It will consist only of the csv file browser and case selector.
+
+- Edit TBD
+
+- Review TBD
