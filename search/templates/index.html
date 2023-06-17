@@ -10,24 +10,52 @@ lang="en-GB" xml:lang="en-GB">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-<link rel="stylesheet" href="{% static './css/styles.css' %}">
 <script src="{% static './JS/file.js' %}"></script>
 <script src="{% static './JS/search.js' %}"></script>
 <script src="{% static './JS/index.js' %}"></script>
 </head>
 <body>  
 <main>
-    <div class="root">
-        <div class="SearchBanner">
-            <div class="HeaderContainer">
-                <div class="HeaderBackgroundImg">
-                    <img class="BannerImgSearch" src="./img/SearchBanner.png">
+    <div class="container gap-2 Root">
+        <header class="row border border-black bg-secondary Header">
+            <div class="col-8 p-2 m-auto HeaderText">CASMOE Editor</div>
+            <div class="d-flex justify-content-center col-4 p-2 LoginWidget">
+                <button type="button" class="btn btn-primary px-4 LoginButton">Login</button>
+            </div>
+        </header>
+
+        <div class="row border HomeContent">
+            <div class="container Searchbar">
+
+            </div>
+            <div class="container CaseList">
+                <div class="CaseListPlaceholder"></div>
+            </div>
+            <div class="SelectedCase">
+                <div class="ShowCase"></div>
+                <div class="d-flex justify-content-center NavText">Selected Case: None</div>
+                <div class="d-flex justify-content-center NavWidget">
+                    <button type="button" class="btn btn-light border p-2 NavButton">Go To Case -></button>
                 </div>
-                <div class="HeaderTextContainer">
-                    eJudge2
-                </div>                             
-            </div>                   
-        </div>   
+            </div>
+        </div>
+
+        <footer class="row border border-black bg-secondary FooterContainer">
+            <div class="p-2 m-auto FooterText">Developed by Samuel (ft19226@bristol.ac.uk). Updated June 2023</div>
+        </footer>
+        <!-- <div class="row">
+            <div class="HomeHeaderContainer">
+                <div class="HeaderTextBanner">
+                    CASMOE Editor. Updated June 2023
+                </div>                   
+                <div class="Login "              
+            </div>       
+        </div>
+        
+        <div class="HomeMainBanner">
+            <img class="BannerImgSearch" src="./img/SearchBanner.png">
+        </div>
+        
         <div class="row"> <input type="file" id="CorpusField" accept=".csv"></div>
         <div class="row">
             <div class="col-4">
@@ -44,7 +72,7 @@ lang="en-GB" xml:lang="en-GB">
             </div>
         </div>
         
-        </div>
+        </div> -->
     </div>
 </main>
 
