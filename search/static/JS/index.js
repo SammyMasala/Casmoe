@@ -6,7 +6,8 @@ function start(){
     if (!f){
         console.log("Error: Element 'CorpusField' not found!");
     }else{
-        f.addEventListener("input", function(){
+        f.value = null;
+        f.addEventListener("change", function(){
             showSearch();
         });
     }
@@ -39,19 +40,13 @@ function writeCasetoDjango(selectedCase){
                 'X-CSRFToken': csrf
             },
             data:{"SelectedCase": JSON.stringify(selectedCase)},
-            success: function (data){
-                alert("yay");
-                /*window.location.href = "case.html"*/
-
+            success: function (response){
+                console.log("Callback received: ", response);
             },
-            error: function (data) {
-                alert("mission failed");
+            error: function (response) {
+                alert("Failed to save to Django! See console...");
+                console.log("Callback received: ", response);
             }
         });
     });
 }
-
-////Deprecated due to Django views
-// function changePage(dir){
-//     // window.location.href = dir;
-// }
