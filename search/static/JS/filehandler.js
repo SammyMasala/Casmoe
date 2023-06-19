@@ -1,59 +1,79 @@
 "use strict"
-//Reads .csv file provided.
-function readFile(elemId) {
+function getCases(fileElemId){
     return new Promise(function(resolve){
-        const csv = document.getElementById(elemId).files[0];
+        var cases = "";
+        const csv = document.getElementById(fileElemId).files[0];
         if(!csv){
-            alert("ERROR: Null file received!")
-        }else if(csv.type != "text/csv"){
-            alert("ERROR: Invalid file received!")
-        }else{
-            const file = new Promise((resolve) =>{
-                const fReader = new FileReader();
-                fReader.addEventListener("load", function(e){
-                    var fileString = e.target.result;    
-                    var casesArray = csvtoArray(fileString);                                  
-                    resolve(casesArray);           
-                })
-                fReader.readAsText(csv);            
-            });
-
-            file.then((casesArray) =>{
-                resolve(casesArray);
-            });
-        }    
+            console.log("Exception trace: No file received");
+            resolve (cases);
+        }else if (csv.type != "text/csv"){
+            console.log("Exception trace: Incorrect file type");
+            resolve (cases);
+        }
+    
+        readCSVFile(csv).then((output) => {
+            if(!setHeaders(output)){
+                console.log("Exception trace: setHeaders()");
+                resolve (cases);
+            }
+            var cases = stringToArray(output);
+            if(!cases){
+                console.log("Exception trace: stringtoArray()");
+                resolve (cases);
+            }
+            resolve (cases);
+        });
     });
 }
 
-function getCases(elemId){
+//Reads .csv file provided.
+function readCSVFile(file) {
     return new Promise(function(resolve){
-        const loadFiles = new Promise((resolve) =>{
-            readFile(elemId).then((casesArray) => {
-                resolve(casesArray); 
-            });               
-        });
-        
-        loadFiles.then((casesArray) => {
-            if(!casesArray){
-                console.log("Error: File read failed! Details: Corpus");
-                return;
-            }
-            resolve(casesArray);      
-        }); 
-    });       
+        const fReader = new FileReader();
+        fReader.addEventListener("load", function(output){
+            resolve(output.target.result);           
+        })
+        fReader.readAsText(file);    
+    });    
+}
+
+function setHeaders(fileString){
+    var headers = fileString.slice(0, fileString.indexOf("\n")).split(",");
+    localStorage.setItem("Headers", JSON.stringify(headers));
+
+    return true;
 }
 
 //Writes csv to JS array.
-function csvtoArray(caseString){
-    var headers = caseString.slice(0, caseString.indexOf("\n")).split(",");
-    localStorage.setItem("Headers", JSON.stringify(headers));
-  
+function stringToArray(caseString){  
+    var cases = "";
+
     var caseRows = splitRows(caseString); 
-    caseRows = splitElements(caseRows);
+    if(!caseRows){
+        console.log("Exception trace: splitRows()");
+        return cases;
+    }
 
-    var caseLines = splitSentence(caseRows);
+    caseRows = splitRowElements(caseRows);
+    if(!caseRows){
+        console.log("Exception trace: splitRowElements()");
+        return cases;
+    }
 
-    const cases = splitCases(caseLines);
+    //Resolve: Exceptions in sentence splitting due to ','
+    caseRows = splitSentence(caseRows);
+    if(!caseRows){
+        console.log("Exception trace: splitSentence()");
+        return cases;
+    }
+
+    var cases = splitCases(caseRows);
+    if(!cases){
+        console.log("Exception trace: splitCases()");
+        return cases;
+    }
+
+    console.log(cases);
     return cases;
 }
 
@@ -61,7 +81,7 @@ function splitRows(caseString){
     return caseString.slice(caseString.indexOf("\n") + 1).split("\n");
 }
 
-function splitElements(rows){
+function splitRowElements(rows){
     for(var i in rows){
         rows[i] = rows[i].split(",");
         for (var j in rows[i]){
@@ -70,10 +90,6 @@ function splitElements(rows){
     }
 
     return rows;
-}
-
-function getCaseData(str){
-    return JSON.parse(localStorage.getItem(str));
 }
 
 function splitSentence(rows){
