@@ -2,7 +2,7 @@
 function loadCaseView(){
     return new Promise((resolve) => {
         getCaseFromDatabase().then((caseData) => {
-            if(!drawCaseSentences(caseData)){
+            if(!drawCaseSentences("colmain", caseData)){
                 console.log("Exception trace: drawCaseSentences()")
                 resolve(false);
             };    
@@ -12,16 +12,21 @@ function loadCaseView(){
     })
 }
 
-function drawCaseSentences(caseData){
-    var lineCol = document.getElementById("colmain");
+function drawCaseSentences(lineColId, caseData){
+    var lineCol = document.getElementById(lineColId);
     if(!lineCol){
         console.log("Exception trace: Element lineCol not found!");
         return false;
     }
+    
+    if(!clearChild(lineColId)){
+        console.log("Exception trace: clearChild()");
+        return false;
+    }
 
     for(var i in caseData){
-        const lineBtn = document.createElement("button");
-        lineBtn.className = "row p-2 border border-light text-start";
+        const lineBtn = document.createElement("div");
+        lineBtn.className = "d-block btn btn-secondary m-2 p-2 text-start";
         lineBtn.id = caseData[i].sentence_id;
         lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
         lineBtn.addEventListener("click", function(clickedLine){
@@ -49,24 +54,19 @@ function fillAnnotations(annotBodyId, caseData, index){
         console.log("Exception trace: clearChild()");
         return false;
     }
-    //load new data
-    var newField = createDiv("row bg-transparent text-start", "");
-    var text = "";
-    if (i == getHeaderIndex("judge")){ // Judge                
-        text = "Judge: " + details[5].toUpperCase();
-    }else if(i == getHeaderIndex("text")){ // Sentence
-        newField.style.fontStyle = "italic";
-        text = details[getHeaderIndex("text")];
-    }else if(i == getHeaderIndex("role")){ // Role                 
-        text = "Role: " + details[i].toUpperCase();
-    }else if(i == getHeaderIndex("align")){ // Summary alignment
-        text = "Aligns with sentence " + details[i] + " of summary.";
-    }   
 
-    if(text){
-        newField.appendChild(document.createTextNode(text));
-        popoutBody.appendChild(newField);
+    //load new data
+    for(let details in lineAnnot){
+        if(details == "text"){
+            continue;
+        }
+        var newEntry = document.createElement("div");
+        newEntry.className = "row p-1";
+        newEntry.innerHTML = details + ": " + lineAnnot[details];
+        annotBody.appendChild(newEntry);
     }
+
+    return true;
 }
 
 // function fillEdit(data, index){
@@ -277,12 +277,12 @@ function getCaseFromDatabase(){
         $(document).ready(function(){
             $.ajax({
                 method: "GET",
-                url:"Get-Case/",
+                url:"/Case-View/Get-Case/",
                 headers: {
                     'X-CSRFToken': csrf
                 },
                 success: function (response){
-                    console.log("Retrieved case data!");
+                    // console.log("Retrieved case data!");
                     resolve(response);
                 },
                 error: function () {

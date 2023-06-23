@@ -22,6 +22,6 @@ function clearChild(elemId){
     return true;
 }
 
-function backToHome(){
-    window.location.href = "index.html";
-}
+// function backToHome(){
+//     window.location.href = "index.html";
+// }

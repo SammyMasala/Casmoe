@@ -2,16 +2,22 @@
 function getCases(fileElemId){
     return new Promise(function(resolve){
         var cases = "";
-        const csv = document.getElementById(fileElemId).files[0];
+        const csv = document.getElementById(fileElemId);
         if(!csv){
-            console.log("Exception trace: No file received");
+            console.log("Exception trace: Element csv not found!");
             resolve (cases);
-        }else if (csv.type != "text/csv"){
-            console.log("Exception trace: Incorrect file type");
+        }
+        
+        var file = csv.files[0];
+        if(!file){
+            console.log("Exception trace: No file found!");
+            resolve (cases);
+        }else if (file.type != "text/csv"){
+            console.log("Exception trace: Incorrect file type!");
             resolve (cases);
         }
     
-        readCSVFile(csv).then((output) => {
+        readCSVFile(file).then((output) => {
             if(!setHeaders(output)){
                 console.log("Exception trace: setHeaders()");
                 resolve (cases);

@@ -1,3 +1,0 @@
-function testFunc(){
-    return true;
-}

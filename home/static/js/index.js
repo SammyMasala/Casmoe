@@ -2,11 +2,6 @@
 this.addEventListener("load", start);
 
 function start(){
-    if(!testFunc()){
-        console.log("Testing failed! See log above.")
-        return;
-    }
-
     if(!addCorpusEventListener("CorpusField")){
         console.log("Exception trace: addCorpusEventListen()")
         return;
