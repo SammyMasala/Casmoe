@@ -9,9 +9,12 @@ lang="en-GB" xml:lang="en-GB">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css">
 <script src="{% static './js/filehandler.js' %}"></script>
+<script src="{% static './js/classes.js' %}"></script>
 <script src="{% static './js/index.js' %}"></script>
 <script src="{% static './js/edit.js' %}"></script>
 <script src="{% static './js/caseview.js' %}"></script>
+<script src="{% static './js/graphs.js' %}"></script>
+
 </head>
 
 <html>
@@ -27,12 +30,13 @@ lang="en-GB" xml:lang="en-GB">
                         assert.equal(result, "");
                     })
                 });
+            });
 
-            })
             QUnit.module("index.js", function(){
                 QUnit.test("Clear Element Children", function(assert){
                     assert.equal(clearElementChildren(""), false);
                 });
+
                 QUnit.test("addCorpusEventListener", function(assert){
                     assert.equal(addCorpusEventListener(""), false);
                 });
@@ -42,6 +46,7 @@ lang="en-GB" xml:lang="en-GB">
                 QUnit.test("drawCaseSentences", function(assert){
                     assert.equal(drawCaseSentences("", []), false);
                 });
+
                 QUnit.test("fillAnnotations", function(assert){
                     assert.equal(fillAnnotations("", [], 0), false);
                 });
@@ -51,7 +56,34 @@ lang="en-GB" xml:lang="en-GB">
                 QUnit.test("clearChild", function(assert){
                     assert.equal(clearChild(""), false);
                 });
-            });            
+            });           
+
+            QUnit.module("classes.js/graphObj", function(){
+                let testData = [
+                    {judge: "test"}, {judge: "test"}, {judge: "test2"},
+                ];
+
+                QUnit.test("new graphObj", function(assert){
+                    var testObj = new GraphObj(testData);
+                    assert.deepEqual(testObj.judgeNames, ["test", "test2"]);
+                    assert.equal((testObj.judgeList)[0].name, "test");
+                    assert.equal((testObj.judgeList)[0].numOfLines, 2);
+                    assert.deepEqual(testObj.judgeFractions, [67, 33]);
+                });
+            })
+
+            QUnit.module("classes.js/judge", function(){
+                QUnit.test("new judge", function(assert){
+                    var testObj = new Judge;
+                    testObj.setName("test");
+                    assert.equal(testObj.name, "test");
+                    testObj.setNumOfLines(5); 
+                    assert.equal(testObj.numOfLines, 5);
+                });                
+            });
+            // QUnit.module("graphs.js", function(){
+            //     
+            // });
         </script>
     </body>
 </html>    

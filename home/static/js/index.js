@@ -50,8 +50,8 @@ function createCaseList(listElementId, cases){
             continue;
         }
         
-        var newButton = document.createElement("button");
-        newButton.className = "btn btn-light";
+        var newButton = document.createElement("div");
+        newButton.className = "d-block btn btn-light";
 
         newButton.name = i;
         newButton.innerHTML = caseTitle;
