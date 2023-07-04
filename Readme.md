@@ -8,7 +8,4 @@ CASMOE is a lightweight web tool for editing the UKSC/UKHL annotated corpus prov
 - Edit and review corpus annotations
 - Present visual graphs of corpus data
 
-[UPDATE]: WIP branch "UI-Rework". Improved Bootstrap implementation (current version kinda spaghetti). Adds QUnit testing.
-- [Completed] v1 Search and Case View
-- Edit and Review
 

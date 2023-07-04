@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-class EditConfig(AppConfig):
+class CaseViewConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'edit'
+    name = 'caseview'

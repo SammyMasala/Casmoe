@@ -34,7 +34,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'edit.apps.EditConfig',
-    'search.apps.SearchConfig',
+    'test.apps.TestConfig',
+    'caseview.apps.CaseViewConfig',
+    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,6 +122,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [BASE_DIR / "files/static/",
+                    "home/static/",
+                    "caseview/static/",
+                    "edit/static/",]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
