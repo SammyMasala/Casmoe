@@ -79,7 +79,6 @@ function stringToArray(caseString){
         return cases;
     }
 
-    console.log(cases);
     return cases;
 }
 

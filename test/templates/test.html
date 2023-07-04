@@ -8,10 +8,11 @@ lang="en-GB" xml:lang="en-GB">
 <title>eJudge(WIP) - Test Page</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css">
-<script src="{% static './js/filehandler.js' %}"></script>
+<script src="{% static './js/ajax_handler.js' %}"></script>
+<script src="{% static './js/file_handler.js' %}"></script>
 <script src="{% static './js/classes.js' %}"></script>
 <script src="{% static './js/index.js' %}"></script>
-<script src="{% static './js/edit.js' %}"></script>
+<script src="{% static './js/lines.js' %}"></script>
 <script src="{% static './js/caseview.js' %}"></script>
 <script src="{% static './js/graphs.js' %}"></script>
 
@@ -24,7 +25,7 @@ lang="en-GB" xml:lang="en-GB">
         <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script>
 
         <script>
-            QUnit.module("filehandler.js", function(){
+            QUnit.module("file_handler.js", function(){
                 QUnit.test("getCases", function(assert){
                     getCases("").then((result) => {
                         assert.equal(result, "");
@@ -42,7 +43,7 @@ lang="en-GB" xml:lang="en-GB">
                 });
             });
 
-            QUnit.module("edit.js", function(){
+            QUnit.module("lines.js", function(){
                 QUnit.test("drawCaseSentences", function(assert){
                     assert.equal(drawCaseSentences("", []), false);
                 });

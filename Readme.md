@@ -8,20 +8,22 @@ CASMOE is a lightweight web tool for editing the UKSC/UKHL annotated corpus prov
 - Edit and review corpus annotations
 - Present visual graphs of corpus data
 
-To-do list:
-1. [COMPLETE]Port HTML files
-2. [COMPLETE]Write selected case to database 
-3. [COMPLETE]Read selected case from database 
-4. navigate between search and edit page
+UI Rework to-do list:
+1. [Complete] Search/Main Page
+2. [Complete] Caseview - Line
+3. [Complete] Caseview - Graph
+
 ---------
-4a. Refactor: Testing for previous functionality
-4b. UI rework. See UIRework.txt
+
+4. Editor - Search/Main Page
+5. Editor - Caseview
+6. Editor - Review
+
 ---------
-5. write edit entries to database
-6. create 'view change' page
-7. read selected case and edited entries
-8. write edited entries into selected case
-9. merge edited case into corpus
+
+7. Django template - Search/Mainpage
+8. Django template - Caseview
+
 ---------
-10. Refactor: Handle half-state 
-11. Refactor: 
+
+9. UI Improvements - TBD

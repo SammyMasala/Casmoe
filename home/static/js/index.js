@@ -3,7 +3,7 @@ this.addEventListener("load", start);
 
 function start(){
     if(!addCorpusEventListener("CorpusField")){
-        console.log("Exception trace: addCorpusEventListen()")
+        console.log("Exception trace: addCorpusEventListen()");
         return;
     }
 }
@@ -18,12 +18,12 @@ function addCorpusEventListener(corpusId){
     corpus.addEventListener("change", function(){
         getCases(corpusId).then((cases) => {
             if(!cases){
-                console.log("Exception trace: getCasesFromFile()")
+                console.log("Exception trace: getCasesFromFile()");
                 return false;
             }
     
             if(!createCaseList("ResultBox", cases)){
-                console.log("Exception trace: createCaseList()")
+                console.log("Exception trace: createCaseList()");
                 return false;
             }
         })        
@@ -62,40 +62,59 @@ function createCaseList(listElementId, cases){
                 //return false;
             }
 
-            if(!writeCasetoDjango(cases[caseIndex])){
-                ////console.log("Exception trace: writeCasetoDjango()"); //Django doesnt return true/false. Future fix.
-                //return false;
-            }
-
-            if(!updateUISelectedCase("NavText", "NavButton", clickedButton.target.innerHTML)){
+            if(!updateUISelectedCase("NavText", "NavButton", "", false)){
                 console.log("Exception trace: updateUISelectedCase()");
                 //return false;
             }
 
-            //return true;
+            
+
+            postCasetoDjango(cases[caseIndex]).then((callback) => {         
+                if(!callback){
+                    console.log("Exception trace: writeCasetoDjango()");
+                }
+                if(!updateUISelectedCase("NavText", "NavButton", clickedButton.target.innerHTML, true)){
+                    console.log("Exception trace: updateUISelectedCase()");
+                    //return false;
+                }                            
+            });                       
         });
+
         listElement.appendChild(newButton);
     }    
+
     return true;
 }
 
-function updateUISelectedCase(navUITextId, btnToCaseViewId, caseTitle){
+function updateUISelectedCase(navUITextId, btnToCaseViewId, caseTitle, enabledState){
     var navUIText = document.getElementById(navUITextId);
     if(!navUIText){
-        console.log("Exception trace: Element navUIText not found!")
+        console.log("Exception trace: Element navUIText not found!");
         return false;
     }
-    navUIText.innerHTML = caseTitle;
+
+    if(enabledState){
+        navUIText.innerHTML = "Selected case: " + caseTitle;        
+    }else if(!enabledState){
+        navUIText.innerHTML = "Saving selected case..";
+    }    
 
     var btnToCaseView = document.getElementById(btnToCaseViewId);
     if(!btnToCaseView){
-        console.log("Exception trace: Element btntoCaseView not found!")
+        console.log("Exception trace: Element btntoCaseView not found!");
         return false;
     }
-    btnToCaseView.className = "btn btn-dark text-white border p-2 m-2";
-    btnToCaseView.addEventListener("click", function(){
-        changePage("Case-View");
-    });
+
+    if(enabledState){
+        btnToCaseView.className = "btn btn-dark text-white border p-2 m-2";
+        btnToCaseView.innerHTML = "Go to Case ->";
+        btnToCaseView.addEventListener("click", function(){
+            goToCaseView();
+        });
+    }else if(!enabledState){
+        btnToCaseView.className = "btn btn-light border p-2 m-2 disabled";
+        btnToCaseView.innerHTML = "Loading...";        
+    }    
 
     return true;
 }
@@ -115,52 +134,6 @@ function clearElementChildren(elemId){
     return true;
 }
 
-function getCookie(name){
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-function writeCasetoDjango(selectedCase){
-    var csrf = getCookie('csrftoken');
-    if(!csrf){
-        console.log("Exception trace: getCookie()");
-        return false;
-    }
-
-    $(document).ready(function(){
-        $.ajax({
-            method: "POST",
-            url:"Home/Save-Case/",
-            headers: {
-                'X-CSRFToken': csrf
-            },
-            data:{"SelectedCase": JSON.stringify(selectedCase)},
-            success: function (response){
-                console.log("Callback received: ", response);
-                return true;
-            },
-            error: function (response) {
-                alert("Failed to save to Django! See console...");
-                console.log("Callback received: ", response);
-                return false;
-            }
-        });
-    });
-
-    return false;
-}
 
 
-function changePage(url){
-    window.location.href = url;
-}
+

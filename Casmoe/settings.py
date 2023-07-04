@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'edit.apps.EditConfig',
     'test.apps.TestConfig',
     'caseview.apps.CaseViewConfig',
     'home.apps.HomeConfig',
@@ -124,7 +125,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / "files/static/",
                     "home/static/",
-                    "caseview/static/",]
+                    "caseview/static/",
+                    "edit/static/",]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

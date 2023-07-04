@@ -31,6 +31,8 @@ function drawGraphJudgeDistribution(graphContId, caseData){
     graphElem.id = "distribution"
     graphCont.appendChild(graphElem);
 
+    console.log(graphData.judgeFractions);
+
     new Chart(
         document.getElementById("distribution"),
         {

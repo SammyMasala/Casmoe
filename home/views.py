@@ -39,8 +39,6 @@ def save_case(request):
         ## 20:citation_bl_ent
         ## 21:judge_ent
 
-        # Note: This should ideally be replaced with a autofill method
-
         for line in data:
             entry = CaseLine.objects.create(
                 case_id=line[0],
