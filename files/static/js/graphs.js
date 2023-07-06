@@ -1,9 +1,7 @@
-"use strict"
-
-
+"use strict";
 
 function loadGraphView(){
-    getCaseFromDatabase().then((caseData) => {
+    getCaseFromDB().then((caseData) => {
         if(!drawGraphJudgeDistribution("colmain", caseData)){
             console.log("Exception trace: drawGraphJudgeDistribution()");
             return false;
@@ -30,8 +28,6 @@ function drawGraphJudgeDistribution(graphContId, caseData){
     graphElem.className = "row p-2 m-2 border";
     graphElem.id = "distribution"
     graphCont.appendChild(graphElem);
-
-    console.log(graphData.judgeFractions);
 
     new Chart(
         document.getElementById("distribution"),

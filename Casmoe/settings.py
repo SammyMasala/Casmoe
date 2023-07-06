@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'review.apps.ReviewConfig',
     'edit.apps.EditConfig',
     'test.apps.TestConfig',
     'caseview.apps.CaseViewConfig',

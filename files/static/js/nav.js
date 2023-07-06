@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 function goToHome(){
     window.location.href = "/Home/";

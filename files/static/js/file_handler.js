@@ -1,4 +1,5 @@
-"use strict"
+"use strict";
+
 function getCases(fileElemId){
     return new Promise(function(resolve){
         var cases = "";

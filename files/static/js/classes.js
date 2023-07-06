@@ -1,3 +1,5 @@
+"use strict";
+
 class Judge {
     constructor(){
         this.name = "";

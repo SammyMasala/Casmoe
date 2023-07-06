@@ -1,45 +1,6 @@
-"use strict"
-function loadLineView(){
-    return new Promise((resolve) => {
-        getCaseFromDatabase().then((caseData) => {
-            if(!drawCaseSentences("colmain", caseData)){
-                console.log("Exception trace: drawCaseSentences()")
-                resolve(false);
-            };    
-            resolve (true);
-        });    
-    })
-}
+"use strict";
 
-function drawCaseSentences(lineColId, caseData){
-    var lineCol = document.getElementById(lineColId);
-    if(!lineCol){
-        console.log("Exception trace: Element lineCol not found!");
-        return false;
-    }
-    
-    if(!clearChild(lineColId)){
-        console.log("Exception trace: clearChild()");
-        return false;
-    }
-
-    for(var i in caseData){
-        const lineBtn = document.createElement("div");
-        lineBtn.className = "d-block btn btn-secondary m-2 p-2 text-start";
-        lineBtn.id = caseData[i].sentence_id;
-        lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
-        lineBtn.addEventListener("click", function(clickedLine){
-            if(!fillAnnotations("EditForm", caseData, clickedLine.target.id)){
-                console.log("Exception trace: fillAnnotations()")
-                return false;
-            };
-        });     
-        lineCol.appendChild(lineBtn);
-    }
-    return true;   
-}
-
-//// THIS IS BAD IMPLEMENTATION (COPYPASTA-ING NON EDITOR DIRECT). NEEDS TO CHANGE  
+//// THIS IS BAD IMPLEMENTATION (COPYPASTA-ING DIRECT). NEEDS TO CHANGE  
 function fillAnnotations(annotBodyId, caseData, index){
     var annotBody = document.getElementById(annotBodyId);
     if(!annotBody){
@@ -91,7 +52,7 @@ function fillAnnotations(annotBodyId, caseData, index){
 
     //Submit button
     var submitBtn = document.createElement("input");
-    submitBtn.setAttribute("type", "submit");
+    submitBtn.type = "submit";
     submitBtn.className = "btn btn-danger";
     submitBtn.value = "Submit";
 
@@ -100,15 +61,15 @@ function fillAnnotations(annotBodyId, caseData, index){
     return true;
 }
 
-function submitChanges(form){
-    var formData = new FormData(form);
-    if(!formData){
-        console.log("Exception trace: Blank form data received!");
+function submitChanges(form){   
+    if(!form){
+        console.log('Exception trace: Invalid form received!');
         return false;
     }
 
-    if(!postLineChangetoDjango(formData)){
-        console.log("Exception trace: postLineChangetoDjango()");
+    var formData = new FormData(form);
+    if(!postLineChangetoDB(formData)){
+        console.log("Exception trace: postLineChangetoDB()");
         return false;
     }
 

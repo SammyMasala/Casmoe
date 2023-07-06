@@ -1,3 +1,5 @@
+"use strict";
+
 function getCookie(name){
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -13,7 +15,7 @@ function getCookie(name){
     return cookieValue;
 }
 
-function postCasetoDjango(selectedCase){    
+function postCasetoDB(selectedCase){    
     return new Promise((resolve) => {
         var csrf = getCookie('csrftoken');
         if(!csrf){
@@ -47,7 +49,7 @@ function postCasetoDjango(selectedCase){
     });         
 }
 
-function postLineChangetoDjango(formData){    
+function postLineChangetoDB(formData){    
     return new Promise((resolve) => {
         var csrf = getCookie('csrftoken');
         if(!csrf){
@@ -82,7 +84,7 @@ function postLineChangetoDjango(formData){
     });         
 }
 
-function getCaseFromDatabase(){
+function getCaseFromDB(){
     return new Promise((resolve) => {
         var csrf = getCookie('csrftoken');
 
@@ -94,6 +96,31 @@ function getCaseFromDatabase(){
                     'X-CSRFToken': csrf
                 },
 
+                success: function (response){
+                    // console.log("Retrieved case data!");
+                    resolve(response);
+                },
+
+                error: function () {
+                    alert("Failed to read file from database! See error log...");
+                    return;
+                }
+            });
+        });
+    });    
+}
+
+function getChangesFromDB(){
+    return new Promise((resolve) => {
+        var csrf = getCookie('csrftoken');
+
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url:"/Review/Get-Changes/",
+                headers: {
+                    'X-CSRFToken': csrf
+                },
                 success: function (response){
                     // console.log("Retrieved case data!");
                     resolve(response);

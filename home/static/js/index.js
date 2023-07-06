@@ -1,4 +1,5 @@
-"use strict"
+"use strict";
+
 this.addEventListener("load", start);
 
 function start(){
@@ -67,9 +68,9 @@ function createCaseList(listElementId, cases){
                 //return false;
             }
 
-            
 
-            postCasetoDjango(cases[caseIndex]).then((callback) => {         
+
+            postCasetoDB(cases[caseIndex]).then((callback) => {         
                 if(!callback){
                     console.log("Exception trace: writeCasetoDjango()");
                 }
