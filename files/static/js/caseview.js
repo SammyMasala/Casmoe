@@ -24,11 +24,15 @@ function clearChild(elemId){
 
 function loadLineView(){
     getCaseFromDB().then((caseData) => {
+        if(!caseData){
+            console.log("Exception trace: No caseData retrieved!");
+            return false;
+        }
+
         if(!drawCaseSentences("colmain", caseData)){
-            console.log("Exception trace: drawCaseSentences()")
-            resolve(false);
+            console.log("Exception trace: drawCaseSentences()")            
         };    
-        resolve (true);
+        return true;
     });    
 }
 

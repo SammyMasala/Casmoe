@@ -119,37 +119,103 @@ function getCaseList(changesData){
 }
 
 function exportChanges(){
-    const getChecked = document.querySelectorAll("input[name=checkbox]:checked");
+    const checkboxes = Array.from(document.getElementsByName("checkbox"));
+
+    for(let i=0;i<checkboxes.length;){
+        if(!checkboxes[i].checked){
+            checkboxes.splice(i, 1);
+        }else{
+            i++;
+        }
+    }
     
     let changeList = [];
-    for(var i in getChecked){
-        changeList.push(getChecked[i].value);
+    for(var i in checkboxes){
+        changeList.push(checkboxes[i].value);
     }
+    const keys = splitKeys(changeList);
+
+    getChangesFromDB().then((response)=>{
+        const changeData = response;
+        let checkedChanges = getCheckedChanges(changeData, keys);
+        if(changeList.length != checkedChanges.length){
+            console.log(changeList.length);
+            console.log(checkedChanges.length);
+            console.log("Exception trace: getMatchingChanges()");
+            return false;
+        }
     
-    const changesData = getChangesFromDB();
+        var writeChanges = changesToCSV(checkedChanges);
+        var exportFile = createFile(writeChanges);
+        if(!exportFile){
+            console.log("Exception trace: createFile()");
+            return false;
+        }
     
-    const keys = getChangeKeys(changeList);
+        var exportElem = document.createElement("a");
+        exportElem.href = window.URL.createObjectURL(exportFile);
+        exportElem.download = "Changes " + (new Date().toUTCString()) + ".csv";  
+        exportElem.click();
+        URL.revokeObjectURL(exportElem.href); 
 
-    for(let i in changesData){
-        const caseId = changesData[i].case_id;
-        const sentenceId = changesData[i].sentence_id;
-
-
-    }
-    return true;
+        return true;
+    });
 }
 
-function getChangeKeys(changeList){
-    let keys = [];
+function getCheckedChanges(changes, keys){
+    let keyMatched = [];
+    console.log(changes);
 
+    for(let i in changes){
+        const caseId = changes[i].case_id;
+        const sentenceId = changes[i].sentence_id;
+
+        for(let j in keys){
+            if(keys[j].length != 2){
+                console.log("Exception trace: Invalid change found in form!");
+                return keyMatched;
+            }
+            const caseKey = keys[j][0];
+            const sentenceKey = keys[j][1];
+
+            console.log(caseId + "," + caseKey);
+            console.log(sentenceId + "," + sentenceKey);
+
+
+            if((caseId == caseKey && sentenceId == sentenceKey)){
+                keyMatched.push(changes[i]);
+                break;
+            }
+        }
+    }    
+    return keyMatched;
+}
+
+function createFile(fileString){
+    return new Blob([fileString], {type:'text/csv'});
+}
+
+function splitKeys(changeList){
     for(let i=0;i<changeList.length;i++){
-        keys.push(changeList[i].value.split(",", 2));
+        changeList[i] = changeList[i].split(",", 2);
     }
-    return keys;
+    return changeList;
+}
+
+function changesToCSV(changes){
+    var fileString = "";
+    for(let i in changes){
+        for(let j in changes[i]){
+            fileString = fileString + changes[i][j] + ",";
+        }
+        fileString = fileString + "\n";
+    }
+
+    return fileString;
 }
 
 function exportAndClear(){
-    if(!exportChanges){
+    if(!exportChanges()){
         console.log("Exception trace: exportChanges()");
         return false;
     }

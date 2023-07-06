@@ -46,21 +46,21 @@ lang="en-GB" xml:lang="en-GB">
             });
 
             QUnit.module("lines.js", function(){
-                QUnit.test("drawCaseSentences", function(assert){
-                    assert.equal(drawCaseSentences("", []), false);
-                });
-
                 QUnit.test("fillAnnotations", function(assert){
                     assert.equal(fillAnnotations("", [], 0), false);
                 });
             });
 
             QUnit.module("caseview.js", function(){
+                QUnit.test("drawCaseSentences", function(assert){
+                    assert.equal(drawCaseSentences("", []), false);
+                });
+
                 QUnit.test("clearChild", function(assert){
                     assert.equal(clearChild(""), false);
                 });
-            });           
-
+            });  
+            
             QUnit.module("classes.js/graphObj", function(){
                 let testData = [
                     {judge: "test"}, {judge: "test"}, {judge: "test2"},
@@ -86,9 +86,20 @@ lang="en-GB" xml:lang="en-GB">
             });
 
             QUnit.module("review.js", function(){
-                QUnit.test("getChangeKeys", function(assert){
-                    assert.deepEqual(getChangeKeys("potato,fries"), ["potato", "fries"]);
-                    assert.deepEqual(getChangeKeys(testArr)[1], ["potato-fries"]);
+                QUnit.test("splitKeys", function(assert){
+                    assert.deepEqual(splitKeys(["potato,fries"]), [["potato", "fries"]]);
+                    assert.deepEqual(splitKeys(["potato-fries"]), [["potato-fries"]]);
+                });
+                QUnit.test("getMatchingChanges", function(assert){
+                    const testKeys = [["1","2"]];
+                    const testData1 = [{case_id: "1", sentence_id: "2"}];
+                    const testData2 = [{case_id: "1", sentence_id: "1"}];
+                    assert.deepEqual(getMatchingChanges(testData1, testKeys), [{case_id: "1", sentence_id: "2"}]);
+                    assert.deepEqual(getMatchingChanges(testData2, testKeys), []);
+                });
+                QUnit.test("changesToCSV", function(assert){
+                    const testData = [["hello", "dude"],["how", "are", "you"]];
+                    assert.deepEqual(changesToCSV(testData), "hello,dude," + "\n" + "how,are,you," + "\n");
                 });
             });
             // QUnit.module("graphs.js", function(){
