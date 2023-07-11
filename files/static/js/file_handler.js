@@ -18,12 +18,12 @@ function getCases(fileElemId){
             resolve (cases);
         }
     
-        readCSVFile(file).then((output) => {
-            if(!setHeaders(output)){
+        readCSVFile(file).then((response) => {
+            if(!setHeaders(response)){
                 console.log("Exception trace: setHeaders()");
                 resolve (cases);
             }
-            var cases = stringToArray(output);
+            var cases = stringToArray(response);
             if(!cases){
                 console.log("Exception trace: stringtoArray()");
                 resolve (cases);

@@ -6,9 +6,11 @@ lang="en-GB" xml:lang="en-GB">
 <head>
 <meta charset="UTF-8"/>
 <title>Casmoe - Home</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{% static './css/styles.css'%}"></script>
 <script src="{% static './js/ajax_handler.js' %}"></script>
 <script src="{% static './js/file_handler.js' %}"></script>
 <script src="{% static './js/nav.js' %}"></script>
@@ -16,35 +18,43 @@ lang="en-GB" xml:lang="en-GB">
 </head>
 <body>  
 <main>
-    <div class="container" id="Root">
+    <div class="container bg-body-tertiary" id="root">
         <!-- Header -->
-        <header class="row text-bg-success">
-            <div class="d-inline col-8 p-2 m-auto" type="button" onclick="goToHome()" id="HeaderText">CASMOE - Case ASMO Editor</div>
-            <div class="d-flex justify-content-center col-4 p-2">
-                <button type="button" class="btn btn-primary px-4" id="LoginButton">Login</button>
-            </div>
+        <header class="row p-2 text-bg-success rounded-2">
+            <div class="p-2 m-auto textlogo" type="button" onclick="goToHome()" id="headertext">Case ASMO Editor</div>
         </header>
 
         <!-- Home Content -->
-        <div class="row border">
-            <div class="d-block text-center p-2" id="SearchBar">
-                <div class="p-2">Select .csv file:</div>
-                <div class="input-group">
-                    <input type="file" class="form-control" id="CorpusField" accept=".csv" placeholder="File Directory...">
+        <div class="row">
+            <div id="homebanner" class="row p-4 m-auto my-1 rounded-2">
+                <div class="text-center p-2">
+                    <div class="p-2 text-light textlogo" id="textbanner">CASMOE - Case/ASMO Editor</div>
+                    <div class="p-2 text-light textlogo">Select .csv file:</div>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="corpusfield" accept=".csv" placeholder="File Directory...">
+                    </div>
                 </div>
-            </div>
-            <div class="container-md border" id="ResultBox">
-                <div id="CaseListPlaceholder"></div>
-            </div>
-            <div class="d-block text-center" id="ToCaseView">
-                <div class="p-1" id="NavText"> Selected Case: None</div>
-                <button type="button" class="btn btn-light border p-2 m-2" id="NavButton">Go To Case -></button>
+            </div>            
+            <div class="row p-2 m-auto border" id="resultwrapper">
+                <div class="col-8 overflow-auto border textlogo" id="resultlist">
+                    <div>-- Cases shown here --</div>
+                </div>                
+                <div class="col-4 border textlogo">
+                    <div class="bg-success p-2 m-auto rounded-1 text-light">Case Preview:</div>
+                    <div class="overflow-auto" id="resultpreview">
+                        <div>-- Preview here --</div>
+                    </div>
+                </div>
+            </div>            
+            <div class="row p-2 m-auto bg-body-tertiary text-center border rounded-2 textlogo" id="tocaseview">
+                <div class="p-1" id="navtext"> Selected Case: None</div>
+                <button type="button" class="btn btn-light border p-2 m-2" id="navbutton">Step 2. Go To Case -></button>
             </div>
         </div>
 
         <!-- Footer  -->
-        <footer class="row text-bg-dark">
-            <div class="p-2 m-1" id="FooterText">Developed by Samuel (ft19226@bristol.ac.uk). Updated June 2023</div>
+        <footer class="row p-2 text-bg-dark rounded-2">
+            <div class="m-auto p-1 textlogo" id="footertext">Developed by Samuel (ft19226@bristol.ac.uk). Updated June 2023</div>
         </footer>
     </div>
 </main>

@@ -1,0 +1,21 @@
+.textlogo{
+    font-family: 'Bookman Old Style', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', serif;
+}
+
+#textbanner{
+    font-size: xx-large;
+}
+
+#homebanner {
+    background-image: url('./UserBanner.jpg');
+    min-height: 25vh;
+}
+
+#resultlist{
+    max-height: 80vh;
+}
+
+#resultpreview{
+    max-height: 80vh;
+}
+

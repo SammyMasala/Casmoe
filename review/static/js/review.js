@@ -15,7 +15,7 @@ function loadReview(){
         }
 
         var caseList = getCaseList(response);
-        if(!drawChangesList("ChangesForm", "DataList", response, caseList)){
+        if(!drawChangesList("changesform", "datalist", response, caseList)){
             console.log("Exception trace: loadChanges()");
             return false;
         }

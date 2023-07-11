@@ -19,3 +19,29 @@ A super user login option will be available at the top right of the screen. When
 - the Review page is a brand new page exclusive to super users. The page consists of two main elements, a large upper 'View Changes' panel occupying the top-middle of the page, and a smaller lower 'Commit changes' panel occupying the bottom of the page. the 'View Changes' panel displays a list of all changed caseline entries saved to the database. Importantly, a checkbox is present for each line for users to select which line to be committed to export via the second panel below. Optional features include sorting by case/sentence id, or other methods to make browsing more organized than simply by entry date. The 'Commit' panel will allow users to export the selected entries as a csv. There are two important steps to this export process, indicated by two rows in the panel: In step 1, users will choose whether to export as a new file, or to merge it into an existing corpus. In selecting the latter option, users will be prompted to input a csv file. users will also be warned that the process will overwrite entries in the selected csv with the same key (case_id + sentence_id). In step 2, users will be given two commit option: commit, and commit AND delete. The latter option deletes selected line entries from the site database after exporting them. 
 
 //NEW: Home page. A new home page to unify navigation between normal and super users. This home page emphasizes visual appeal, in the form of a minimalist interface consisting of less than 5 big vibrant buttons. the New Home page layout consists of a header and a main body. The header displays the site name and the Login button for super users. The main body displays comically large (> 30% viewport width?) buttons denoting page information for users to click and navigate to the pages found in the editor tool. For normal users, there is 1 page button available: Search. For super users, there are 2 page buttons: Review and Edit. Not all pages are available on the New Home as some require prerequisite data to be selected and loaded by the site (such as the Case View needing a case to first be selected via the Search page).       
+
+//v2 Rework
+
+[Complete]Home:
+- Add Image banner
+- Add sidebar showing Caseview preview
+- Implement y-Overflow
+
+Case-View
+- Navbar rework
+- Implement Overview
+- Improve sidebar text
+- Implement additional graphs
+
+Navigation page
+- Normal User(Home)
+- Login to super user
+
+Templating: Toggling between modes
+- Implement to Search 
+    - Change render
+    - Change links
+- Rebuild Case View
+    - Change Sidebar
+
+TBD

@@ -3,7 +3,7 @@
 this.addEventListener("load", start);
 
 function start(){
-    if(!addCorpusEventListener("CorpusField")){
+    if(!addCorpusEventListener("corpusfield")){
         console.log("Exception trace: addCorpusEventListen()");
         return;
     }
@@ -23,7 +23,7 @@ function addCorpusEventListener(corpusId){
                 return false;
             }
     
-            if(!createCaseList("ResultBox", cases)){
+            if(!createCaseList("resultlist", cases)){
                 console.log("Exception trace: createCaseList()");
                 return false;
             }
@@ -60,24 +60,32 @@ function createCaseList(listElementId, cases){
             var caseIndex = clickedButton.target.name;
             if(!caseIndex){
                 console.log("Exception trace: Value caseIndex not found!");
-                //return false;
+                return false;
             }
 
-            if(!updateUISelectedCase("NavText", "NavButton", "", false)){
+            if(!updateUISelectedCase("navtext", "navbutton", "", false)){
                 console.log("Exception trace: updateUISelectedCase()");
-                //return false;
+                return false;
             }
 
-
-
-            postCasetoDB(cases[caseIndex]).then((callback) => {         
-                if(!callback){
+            postCasetoDB(cases[caseIndex]).then((response) => {         
+                if(!response){
                     console.log("Exception trace: writeCasetoDjango()");
                 }
-                if(!updateUISelectedCase("NavText", "NavButton", clickedButton.target.innerHTML, true)){
-                    console.log("Exception trace: updateUISelectedCase()");
-                    //return false;
-                }                            
+
+                const runTimeout = setTimeout (function(){
+                    if(!updateUISelectedCase("navtext", "navbutton", clickedButton.target.innerHTML, true)){
+                        console.log("Exception trace: updateUISelectedCase()");
+                        return false;
+                    }   
+    
+                    if (!updateResultPreview("resultpreview")){
+                        console.log("Exception trace: updateCasePreview()");
+                        return false;
+                    }  
+                }, 2000);   
+                
+                runTimeout();
             });                       
         });
 
@@ -86,6 +94,40 @@ function createCaseList(listElementId, cases){
 
     return true;
 }
+
+function updateResultPreview(resultPreviewId){
+    const resultPreview = document.getElementById(resultPreviewId);
+    if(!resultPreview){
+        console.log("Exception trace: Element resultPreview not found!");
+        return false;
+    }
+
+    if(!clearElementChildren(resultPreviewId)){
+        console.log("Exception trace: clearElementChildren()");
+        return false;
+    }
+
+    getCaseFromDB().then((response) => {
+        if(!response){
+            console.log("Exception trace: No case retrieved!");
+            return false;
+        }
+
+        for(let i in response){
+            const entry = document.createElement("div");
+            entry.className = "bg-secondary-subtle p-2 m-2 border rounded-2";
+            entry.innerHTML = response[i].text;
+
+            resultPreview.appendChild(entry);
+            if(i == 6){
+                entry.innerHTML = "......";
+                break;
+            }            
+        }        
+    })
+
+    return true;
+} 
 
 function updateUISelectedCase(navUITextId, btnToCaseViewId, caseTitle, enabledState){
     var navUIText = document.getElementById(navUITextId);
