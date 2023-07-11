@@ -54,43 +54,84 @@ function createCaseList(listElementId, cases){
         var newButton = document.createElement("div");
         newButton.className = "d-block btn btn-light";
 
-        newButton.name = i;
+        newButton.value = i;
+        newButton.id = "casebutton";
         newButton.innerHTML = caseTitle;
         newButton.addEventListener("click", function(clickedButton){ 
-            var caseIndex = clickedButton.target.name;
+            var caseIndex = clickedButton.target.value;
             if(!caseIndex){
                 console.log("Exception trace: Value caseIndex not found!");
                 return false;
             }
 
-            if(!updateUISelectedCase("navtext", "navbutton", "", false)){
-                console.log("Exception trace: updateUISelectedCase()");
+            if(!handleCaseClicked(cases, caseIndex, clickedButton.target.innerHTML)){
+                console.log("Exception trace: handleCaseClicked()");
                 return false;
-            }
-
-            postCasetoDB(cases[caseIndex]).then((response) => {         
-                if(!response){
-                    console.log("Exception trace: writeCasetoDjango()");
-                }
-
-                const runTimeout = setTimeout (function(){
-                    if(!updateUISelectedCase("navtext", "navbutton", clickedButton.target.innerHTML, true)){
-                        console.log("Exception trace: updateUISelectedCase()");
-                        return false;
-                    }   
-    
-                    if (!updateResultPreview("resultpreview")){
-                        console.log("Exception trace: updateCasePreview()");
-                        return false;
-                    }  
-                }, 2000);   
-                
-                runTimeout();
-            });                       
+            }                          
         });
 
         listElement.appendChild(newButton);
     }    
+
+    return true;
+}
+
+function handleCaseClicked(cases, caseIndex, caseTitle){
+    if(!updateUISelectedCase("navtext", "navbutton", "", false)){
+        console.log("Exception trace: updateUISelectedCase()");
+        return false;
+    }
+
+    if(!toggleCaseButton("[id='casebutton']", false)){
+        console.log("Exception trace: toggleCaseButton()");
+        return false;
+    };
+
+    postCasetoDB(cases[caseIndex]).then((response) => {         
+        if(!response){
+            console.log("Exception trace: writeCasetoDjango()");
+        }
+
+        const runTimeout = setTimeout (function(){
+            if(!toggleCaseButton("[id='casebutton']", true)){
+                console.log("Exception trace: toggleCaseButton()");
+                return false;
+            };
+
+            if(!updateUISelectedCase("navtext", "navbutton", caseTitle, true)){
+                console.log("Exception trace: updateUISelectedCase()");
+                return false;
+            }   
+
+            if (!updateResultPreview("resultpreview")){
+                console.log("Exception trace: updateCasePreview()");
+                return false;
+            }  
+
+            return true;
+        }, 1500);   
+    });         
+}
+
+function toggleCaseButton(casebuttonId, state){
+    const caseButtons = document.querySelectorAll(casebuttonId);
+    if(!caseButtons){
+        console.log("Exception trace: no caseButtons found!");
+        return false;
+    }
+
+    if(!caseButtons){
+        console.log("Exception trace: Element caseButtons not found!");
+        return false;
+    }
+
+    for(let i=0;i<caseButtons.length;i++){
+        if(!state){
+            caseButtons[i].className = "d-block btn btn-light disabled";
+        }else {
+            caseButtons[i].className = "d-block btn btn-light";
+        }
+    }
 
     return true;
 }
