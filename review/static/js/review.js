@@ -1,12 +1,5 @@
 "use strict";
 
-this.addEventListener("load", function(){
-    if(!loadReview()){
-        console.log("Exception trace: loadReview()");
-    }    
-    return true;
-});
-
 function loadReview(){
     getChangesFromDB().then((response) => {
         if(!response){

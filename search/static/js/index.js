@@ -1,12 +1,5 @@
 "use strict";
 
-this.addEventListener("load", function(){
-    if(!addCorpusEventListener("corpusfield")){
-        console.log("Exception trace: addCorpusEventListen()");
-        return;
-    }
-});
-
 function addCorpusEventListener(corpusId){
     var corpus = document.getElementById(corpusId);
     if (!corpus){
