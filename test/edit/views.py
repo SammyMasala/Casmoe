@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from home.models import CaseLine
+from search.models import CaseLine
 
 def edit_page(request):
     

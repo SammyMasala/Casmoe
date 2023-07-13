@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from home.models import CaseLine
+from search.models import CaseLine
 from .models import Changes
 
 import json

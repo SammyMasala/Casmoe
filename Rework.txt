@@ -27,11 +27,9 @@ A super user login option will be available at the top right of the screen. When
 - Add sidebar showing Caseview preview
 - Implement y-Overflow
 
-Case-View
+[Complete]Case-View
 - Navbar rework
 - Implement Overview
-- Improve sidebar text
-- Implement additional graphs
 
 Navigation page
 - Normal User(Home)

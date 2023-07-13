@@ -42,7 +42,7 @@ function clearChild(elemId){
 function drawChangesList(changesFormId, dataListId, changesData, caseList){
     var changesForm = document.getElementById(changesFormId);
     if(!changesForm){
-        console.log("Exception trace: Element changesForm found!");
+        console.log("Exception trace: Element changesForm not found!");
         return false;
     }
 

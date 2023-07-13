@@ -193,7 +193,7 @@ function updateUISelectedCase(navUITextId, btnToCaseViewId, caseTitle, enabledSt
         btnToCaseView.className = "btn btn-dark text-white border p-2 m-2";
         btnToCaseView.innerHTML = "Go to Case ->";
         btnToCaseView.addEventListener("click", function(){
-            goToCaseView();
+            goToSummary();
         });
     }else if(!enabledState){
         btnToCaseView.className = "btn btn-light border p-2 m-2 disabled";
