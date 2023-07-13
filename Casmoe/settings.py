@@ -35,7 +35,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'review.apps.ReviewConfig',
-    'edit.apps.EditConfig',
     'test.apps.TestConfig',
     'caseview.apps.CaseViewConfig',
     'search.apps.SearchConfig',
@@ -65,7 +64,7 @@ TEMPLATES = [
         'DIRS': [BASE_DIR / "files/templates/",
             "home/templates/",
             "search/templates/",
-            "edit/templates/",
+            "caseview/templates/",
             "review/templates/",
         ],
         'APP_DIRS': True,
@@ -134,7 +133,7 @@ STATICFILES_DIRS = [BASE_DIR / "files/static/",
                     "home/static/",
                     "search/static/",
                     "caseview/static/",
-                    "edit/static/",]
+                    ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

@@ -1,4 +1,50 @@
 "use strict";
+function loadEditView(){
+    return new Promise((resolve) => {
+        getCaseFromDB().then((response) => {
+            if(!response){
+                console.log("Exception trace: No caseData retrieved!");
+                resolve(false);
+            }
+    
+            if(!drawCaseSentences("colmain", response)){
+                console.log("Exception trace: drawCaseSentences()");
+                resolve(false);            
+            };    
+
+            resolve(true);
+        });   
+    });     
+}
+
+function drawCaseSentences(lineColId, caseData){
+    var lineCol = document.getElementById(lineColId);
+    if(!lineCol){
+        console.log("Exception trace: Element lineCol not found!");
+        return false;
+    }
+    
+    if(!clearChild(lineColId)){
+        console.log("Exception trace: clearChild()");
+        return false;
+    }
+
+    for(var i in caseData){
+        const lineBtn = document.createElement("div");
+        lineBtn.className = "d-block btn bg-success-subtle m-2 p-2 text-start";
+        lineBtn.id = caseData[i].sentence_id;
+        lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
+        lineBtn.addEventListener("click", function(clickedLine){
+            if(!fillAnnotations("popoutbody", caseData, clickedLine.target.id)){
+                console.log("Exception trace: fillAnnotations()")
+                return false;
+            };
+        });     
+        lineCol.appendChild(lineBtn);
+    }
+    return true;   
+}
+
 
 //// THIS IS BAD IMPLEMENTATION (COPYPASTA-ING DIRECT). NEEDS TO CHANGE  
 function fillAnnotations(annotBodyId, caseData, index){

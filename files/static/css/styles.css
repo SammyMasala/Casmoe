@@ -23,6 +23,10 @@
     max-height: 120vh;
 }
 
+#popoutbody{
+    max-height: 120vh;
+}
+
 #graphlist{
     max-height: 20vh;
 }

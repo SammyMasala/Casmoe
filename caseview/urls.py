@@ -8,4 +8,5 @@ urlpatterns = [
     path('Line/', views.case_page, name='Case-View'),
     path('Graph/', views.graph_page, name='Graph-View'),
     path('Get-Case/', views.get_case),
+    path('Submit-Changes/', views.save_change),
 ]

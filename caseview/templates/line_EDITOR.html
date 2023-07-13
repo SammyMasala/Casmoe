@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends 'frame_editor.html' %}
+{% load static %}
+
+{% block addscript %}
+<script src="{% static './js/edit_lines.js' %}"></script>
+<script src="{% static './js/caseview.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        loadEditView().then((response) => {
+            if(!response){
+                console.log("Exception trace: loadCaseView()");
+                return;
+            };
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    <div class="row border textlogo">
+        <div class="col-8 border overflow-auto" id="colmain">
+        </div>
+        <div class="col-4 bg-light border">
+            <!-- Bad implementation changing form id to 'popoutbody'. Confusing! -->
+            <form class="overflow-auto" id="popoutbody" action="javascript:;" onsubmit="submitChanges(this)">
+                <input type="submit" value="Submit" class="btn btn-danger"></button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+

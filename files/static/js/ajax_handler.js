@@ -60,7 +60,7 @@ function postLineChangetoDB(formData){
         $(document).ready(function(){
             $.ajax({
                 type: "post",
-                url:"/Edit/Submit-Changes/",
+                url:"/Case-View/Submit-Changes/",
                 headers: {
                     'X-CSRFToken': csrf,
                 },
