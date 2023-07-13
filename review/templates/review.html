@@ -1,66 +1,44 @@
 <!DOCTYPE html>
+{% extends "frame_editor.html" %}
 {% load static %}
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-lang="en-GB" xml:lang="en-GB">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Casmoe - Review(Editor)</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block addscript %}
+<script src="{% static './js/review.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        if(!loadReview()){
+            console.log("Exception trace: loadReview()");
+        }    
+        return true;
+    });
+</script>
+{% endblock %}
 
-        <!-- <link rel="stylesheet" href="{% static './css/styles.css' %}"> -->
-        <script src="{% static './js/ajax_handler.js' %}"></script>
-        <script src="{% static './js/file_handler.js' %}"></script>
-        <script src="{% static './js/nav.js' %}"></script>
-        <script src="{% static './js/review.js' %}"></script>
-    </head>
+{% block content %}
+    <div class="row border textlogo">
+        <div class="col-8 border m-auto p-2">
+            <form id="changesform" action="javascript:;">                
+            </form>
+        </div>
+        <div class="col-4 border m-auto p-2" id="datalist">
+        </div>            
+    </div>
 
-    <body>
-        <main>
-            <div class="container" id="root">
-                <!-- Header -->
-                <header class="row text-bg-primary">
-                    <div class="col-4 p-2 m-auto" type="button" onclick="goToHome()" id="headertext">CASMOE - Case ASMO Editor</div>
-                    <div class="col-4 p-2 m-auto text-center" >EDITOR</div>
-                    <div class="d-flex justify-content-center col-4 p-2">
-                        <button type="button" class="btn btn-primary px-4" id="loginbutton">Login</button>
-                    </div>
-                </header>
-
-                <div class="row border">
-                    <div class="col-8 border m-auto p-2">
-                        <form id="changesform" action="javascript:;">                
-                        </form>
-                    </div>
-                    <div class="col-4 border m-auto p-2" id="datalist">
-                    </div>            
+    <div class="row border textlogo">
+        <div class="row m-auto">
+            <button class="col btn btn-primary m-2 p-2" data-bs-toggle="button">Export as new .csv</button>
+            <div class="col bg-success m-2 p-2">
+                <a class="text-white">Merge into existing csv</a>
+                <div class="input-group m-2 p-2">
+                    <input class="" type="file" id="corpusfield" accept=".csv" class="col form-control btn btn-light"></button> 
                 </div>
+            </div> 
+            
+        </div>                    
+        <div class="row border m-auto">
+            <button class="btn btn-success m-2 p-2" onclick="exportChanges()">Export</button> 
+            <button class="btn btn-danger m-2 p-2" onclick="exportAndClear()">Export and Clear Changes</button> 
+        </div>                                    
+    </div>
+{% endblock %}
 
-                <div class="row border">
-                    <div class="row m-auto">
-                        <button class="col btn btn-primary m-2 p-2" data-bs-toggle="button">Export as new .csv</button>
-                        <div class="col bg-success m-2 p-2">
-                            <a class="text-white">Merge into existing csv</a>
-                            <div class="input-group m-2 p-2">
-                                <input class="" type="file" id="corpusfield" accept=".csv" class="col form-control btn btn-light"></button> 
-                            </div>
-                        </div> 
-                        
-                    </div>                    
-                    <div class="row border m-auto">
-                        <button class="btn btn-success m-2 p-2" onclick="exportChanges()">Export</button> 
-                        <button class="btn btn-danger m-2 p-2" onclick="exportAndClear()">Export and Clear Changes</button> 
-                    </div>                                    
-                </div>
-
-                <!-- Footer  -->
-                <footer class="row p-2 text-bg-dark rounded-2">
-                    <div class="m-auto p-1 textlogo" id="footertext">Developed by Samuel (ft19226@bristol.ac.uk). Updated June 2023</div>
-                </footer>
-            </div>
-        </main>
-    </body>
-</html>

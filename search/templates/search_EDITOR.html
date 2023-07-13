@@ -4,6 +4,14 @@
 
 {% block addscript %}
 <script src="{% static './js/index.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        if(!addCorpusEventListener("corpusfield")){
+            console.log("Exception trace: addCorpusEventListen()");
+            return;
+        }
+    });
+</script>
 {% endblock %}
     
 
