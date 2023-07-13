@@ -26,7 +26,7 @@ function postCasetoDB(selectedCase){
         $(document).ready(function(){
             $.ajax({
                 type: "POST",
-                url:"/Home/Save-Case/",
+                url:"/Search/Save-Case/",
                 headers: {
                     'X-CSRFToken': csrf,
                 },
@@ -133,4 +133,8 @@ function getChangesFromDB(){
             });
         });
     });    
+}
+
+function handleLogin(){
+    return goToEditorHome();
 }

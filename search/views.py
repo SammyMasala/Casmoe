@@ -6,8 +6,11 @@ import json
 
 from .models import CaseLine
 
-def searchpage(request):
-    return render(request, 'index.html')
+def search_page(request):
+    return render(request, 'search.html')
+
+def search_page_editor(request):
+    return render(request, 'search_EDITOR.html')
 
 def save_case(request):
     if request.method == "POST" and 'SelectedCase' in request.POST:

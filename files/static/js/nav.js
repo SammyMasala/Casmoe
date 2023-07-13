@@ -8,6 +8,15 @@ function goToEditorHome(){
     window.location.href = "/Home/Editor/";
 }
 
+function goToEditorSearch(){
+    window.location.href = "/Search/Editor/";
+}
+
+
+function goToEditorCaseView(){
+    window.location.href = "/Case-View/Editor/";
+}
+
 function goToSearch(){
     window.location.href='/Search/';
 }

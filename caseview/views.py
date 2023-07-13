@@ -2,6 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from search.models import CaseLine
 
+def summary_page_editor(request):    
+    return render(request, "summary_EDITOR.html")
+
 def summary_page(request):    
     return render(request, "summary.html")
 

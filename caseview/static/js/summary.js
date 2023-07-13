@@ -1,12 +1,3 @@
-this.addEventListener("load", function(){
-    loadSummaryView().then((response) => {
-        if(!response){
-            console.log("Exception trace: loadCaseView()");
-            return;
-        };
-    });
-});
-
 function loadSummaryView(){
     return new Promise((resolve) => {
         getCaseFromDB().then((response) => {
