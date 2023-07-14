@@ -26,18 +26,19 @@
 
     <div class="row border textlogo">
         <div class="row m-auto">
-            <button class="col btn btn-primary m-2 p-2" data-bs-toggle="button">Export as new .csv</button>
-            <div class="col bg-success m-2 p-2">
-                <a class="text-white">Merge into existing csv</a>
+            <button class="col-5 btn btn-outline-primary m-2 p-2 active" id="btnnewcsv" onclick="toggleNewOption()">Export as new .csv</button>
+            <div class="d-flex justify-content-center m-auto col">--OR--</div>
+            <button class="col-5 btn btn-outline-success m-2 p-2 rounded-2"  id="btnmergecsv">
+                <a>Merge into existing .csv</a>
                 <div class="input-group m-2 p-2">
-                    <input class="" type="file" id="corpusfield" accept=".csv" class="col form-control btn btn-light"></button> 
+                    <input class="" type="file" id="corpusfield" accept=".csv" class="col form-control btn btn-light" onclick="toggleMergeOption()"></button> 
                 </div>
-            </div> 
+            </button> 
             
         </div>                    
         <div class="row border m-auto">
             <button class="btn btn-success m-2 p-2" onclick="exportChanges()">Export</button> 
-            <button class="btn btn-danger m-2 p-2" onclick="exportAndClear()">Export and Clear Changes</button> 
+            <button class="btn btn-danger m-2 p-2" onclick="exportAndClear()">Export and Clear Selected Changes</button> 
         </div>                                    
     </div>
 {% endblock %}

@@ -17,6 +17,47 @@ function loadReview(){
     return true;    
 }
 
+function toggleNewOption(){
+    const newCsvBtn = document.getElementById("btnnewcsv");
+    if(!newCsvBtn){
+        console.log("Exception trace: Element newCsvBtn not found!");
+        return;
+    }
+
+    const mergeCsvBtn = document.getElementById("btnmergecsv");
+    if(!mergeCsvBtn){
+        console.log("Exception trace: Element mergeCsvBtn not found!");
+        return;
+    }
+
+    mergeCsvBtn.classList.remove("active");
+    if(!newCsvBtn.classList.contains("active")){
+        newCsvBtn.classList.add("active");
+    }
+
+    return;
+}
+
+function toggleMergeOption(){
+    const newCsvBtn = document.getElementById("btnnewcsv");
+    if(!newCsvBtn){
+        console.log("Exception trace: Element newCsvBtn not found!");
+        return;
+    }
+    const mergeCsvBtn = document.getElementById("btnmergecsv");
+    if(!mergeCsvBtn){
+        console.log("Exception trace: Element mergeCsvBtn not found!");
+        return;
+    }
+
+    newCsvBtn.classList.remove("active");
+    if(!mergeCsvBtn.classList.contains("active")){
+        mergeCsvBtn.classList.add("active");
+    }
+
+    return;
+}
+
 function clearChild(elemId){
     var elem = document.getElementById(elemId)
     if(!elem){
@@ -132,32 +173,120 @@ function exportChanges(){
         const changeData = response;
         let checkedChanges = getCheckedChanges(changeData, keys);
         if(changeList.length != checkedChanges.length){
-            console.log(changeList.length);
-            console.log(checkedChanges.length);
             console.log("Exception trace: getMatchingChanges()");
             return false;
         }
     
-        var writeChanges = changesToCSV(checkedChanges);
-        var exportFile = createFile(writeChanges);
-        if(!exportFile){
-            console.log("Exception trace: createFile()");
+        let changes = splitChangesByCase(checkedChanges);
+
+        let exportOption = document.getElementById("btnnewcsv");
+        if(!exportOption){
+            console.log("Exception trace: Element exportOption now found!");
             return false;
         }
-    
-        var exportElem = document.createElement("a");
-        exportElem.href = window.URL.createObjectURL(exportFile);
-        exportElem.download = "Changes " + (new Date().toUTCString()) + ".csv";  
-        exportElem.click();
-        URL.revokeObjectURL(exportElem.href); 
+
+        if(exportOption.classList.contains("active")){
+            if(!exportNewFile(changes)){
+                console.log("Exception trace: exportNewFile()");
+                return false;
+            }   
+        }else{
+            if(!exportMergeFile(changes)){
+                console.log("Exception trace: exportMergeFile()");
+                return false;
+            }   
+        }            
 
         return true;
     });
 }
 
+function exportNewFile(changes){
+    let writeChanges = changesToCSV(changes);
+
+    var exportFile = createFile(writeChanges);
+    if(!exportFile){
+        console.log("Exception trace: createFile()");
+        return false;
+    }
+
+    var exportElem = document.createElement("a");
+    exportElem.href = window.URL.createObjectURL(exportFile);
+    exportElem.download = "Changes " + (new Date().toUTCString()) + ".csv";  
+    exportElem.click();
+    URL.revokeObjectURL(exportElem.href); 
+
+    return true;
+}
+
+function exportMergeFile(changes){
+    getCases("corpusfield").then((response) => {
+        for(let i in response){
+            for(let j in response[i]){
+                for(let k in changes){
+                    for(let l in changes[k]){
+                        const case_id = changes[k][l][0];
+                        const sentence_id = changes[k][l][3];
+
+                        if(case_id == response[i][j][0] && sentence_id == response[i][j][3]){
+                            response[i][j] = changes[k][l];
+                        }
+                    }                    
+                }
+            }
+        }
+
+        let writeChanges = changesToCSV(response);
+
+        var exportFile = createFile(writeChanges);
+        if(!exportFile){
+            console.log("Exception trace: createFile()");
+            return false;
+        }
+
+        var exportElem = document.createElement("a");
+        exportElem.href = window.URL.createObjectURL(exportFile);
+        exportElem.download = "Corpus " + (new Date().toUTCString()) + ".csv";  
+        exportElem.click();
+        URL.revokeObjectURL(exportElem.href); 
+
+        return true;
+    });    
+}
+
+function splitChangesByCase(changes){
+    let result = [];
+    let tmpArray = [];
+
+    while(changes.length > 0){
+        const case_id = changes[0][0];
+
+        let exists = false;
+        for(let i in result){
+            if(result[i][0] && (result[i][0][0] == case_id)){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            tmpArray.push(changes[0]);
+        
+            for(let i in changes){
+                if(i != 0 && (changes[i][0] == tmpArray[0][0])){
+                    tmpArray.push(changes[i]);
+                }
+            }
+            result.push(tmpArray);
+            tmpArray = [];
+        }            
+
+        changes.splice(0,1);        
+    }
+    return result;    
+}
+
 function getCheckedChanges(changes, keys){
     let keyMatched = [];
-    console.log(changes);
 
     for(let i in changes){
         const caseId = changes[i].case_id;
@@ -170,10 +299,6 @@ function getCheckedChanges(changes, keys){
             }
             const caseKey = keys[j][0];
             const sentenceKey = keys[j][1];
-
-            console.log(caseId + "," + caseKey);
-            console.log(sentenceId + "," + sentenceKey);
-
 
             if((caseId == caseKey && sentenceId == sentenceKey)){
                 keyMatched.push(changes[i]);
@@ -199,7 +324,10 @@ function changesToCSV(changes){
     var fileString = "";
     for(let i in changes){
         for(let j in changes[i]){
-            fileString = fileString + changes[i][j] + ",";
+            for(let k in changes[i][j]){
+                fileString = fileString + changes[i][j][k] + ",";
+            }
+            fileString = fileString + "\n";            
         }
         fileString = fileString + "\n";
     }

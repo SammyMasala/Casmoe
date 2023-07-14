@@ -20,14 +20,14 @@ A super user login option will be available at the top right of the screen. When
 
 //NEW: Home page. A new home page to unify navigation between normal and super users. This home page emphasizes visual appeal, in the form of a minimalist interface consisting of less than 5 big vibrant buttons. the New Home page layout consists of a header and a main body. The header displays the site name and the Login button for super users. The main body displays comically large (> 30% viewport width?) buttons denoting page information for users to click and navigate to the pages found in the editor tool. For normal users, there is 1 page button available: Search. For super users, there are 2 page buttons: Review and Edit. Not all pages are available on the New Home as some require prerequisite data to be selected and loaded by the site (such as the Case View needing a case to first be selected via the Search page).       
 
-//v2 Rework
+//v2 Rework COMPLETE - Django templating
 
-[Complete]Home:
+Home:
 - Add Image banner
 - Add sidebar showing Caseview preview
 - Implement y-Overflow
 
-[Complete]Case-View
+Case-View
 - Navbar rework
 - Implement Overview
 
@@ -42,4 +42,7 @@ Templating: Toggling between modes
 - Rebuild Case View
     - Change Sidebar
 
-TBD
+//v3 Rework
+
+- Complete Review
+- TDD implementation rewrite
