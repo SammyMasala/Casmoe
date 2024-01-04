@@ -11,7 +11,7 @@ lang="en-GB" xml:lang="en-GB">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <link rel="stylesheet" href="{% static './css/styles.css' %}">
+        <link rel="stylesheet" href="{% static './css/styles.css' %}?100">
         <script src="{% static './js/ajax_handler.js' %}"></script>
         <script src="{% static './js/file_handler.js' %}"></script>
         <script src="{% static './js/nav.js' %}"></script>
@@ -19,15 +19,18 @@ lang="en-GB" xml:lang="en-GB">
         {% endblock %}
     </head>
 
-    <body>
+    <body palette-theme="dark">
         <main>
-            <div class="container" id="root">
+            <div class="container-fluid">
                 <!-- Header -->
                 {% block header %}
-                <header class="row p-2 text-bg-success rounded-2">
-                    <div class="p-2 m-auto textlogo" type="button" onclick="goToHome()" id="headertext">Case ASMO Editor</div>
+                <header id="header" class="row header">
+                    <div class="container-fluid header-text" type="button" onclick="goToHome()">
+                        Case ASMO Editor
+                    </div>
                 </header>        
                 {% endblock %}
+                <!-- End Header -->
 
                 <!-- Content -->
                 {% block content %}
@@ -35,8 +38,10 @@ lang="en-GB" xml:lang="en-GB">
                 
                 <!-- Footer  -->
                 {% block footer %}
-                <footer class="row p-2 text-bg-dark rounded-2">
-                    <div class="m-auto p-1 textlogo" id="footertext">Developed by Samuel (ft19226@bristol.ac.uk). Updated July 2023</div>
+                <footer id="footer" class="row footer">
+                    <div class="container-fluid footer-text">
+                        Developed by Samuel (ft19226@bristol.ac.uk). Updated July 2023
+                    </div>
                 </footer>
                 {% endblock %}
             </div>
