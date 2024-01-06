@@ -3,7 +3,6 @@
 {% load static %}
 
 {% block content %}
-<div id="container-fluid">
     <!-- Section:Hero -->
     <section id="hero" class="row hero">
         <div class="container-fluid hero-logo">
@@ -12,24 +11,23 @@
     </section>
     <!-- End Section:Hero -->
     <!-- Section: Select Mode -->
-    <section id="mode-select" class="row ">
+    <section id="mode-select" class="row">
         <div class="container-fluid mode-viewer">
             <img src="{% static './img/mode-select-bg.png' %}" class="img-fluid mode-viewer-bg" alt="search-icon">
             <img src="{% static './img/search-icon.png' %}" class="img-fluid mode-viewer-icon" alt="search-icon">
-            <button class="btn mode-button" onclick="goToSearch()">
+            <button class="btn mode-button" role="navigation" onclick="goToSearch()">
                 Search
             </button>    
         </div>
         <div class="container-fluid mode-editor">
             <img src="{% static './img/mode-select-bg.png' %}" class="img-fluid mode-editor-bg" alt="search-icon">
             <img src="{% static './img/editor-icon.png' %}" class="img-fluid mode-viewer-icon" alt="editor-icon">
-            <button class="btn mode-button" onclick="goToSearch()">
+            <button class="btn mode-button" role="navigation" onclick="goToSearch()">
                 Editor
             </button>    
         </div>               
     </section>
     <!-- End Section: Select Mode -->
-</div>
 {% endblock %}
                 
             

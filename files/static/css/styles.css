@@ -62,11 +62,16 @@ body{
 
 .header-text{
     font-family: 'Brush Script MT', cursive;
+    display: inline-flex;
     width:auto;
     margin-top: 10px;
     margin-left: 20px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.header-text{
+    text-shadow: 2px 2px 2px var(--default-color-outline);
 }
 
 .header-text{
@@ -78,9 +83,8 @@ body{
 
 /* Footer */
 .footer{
-    width: 80%;
-    height: 20px;
     display: grid;
+    height: 20px;
     margin: auto;
     align-items: center;
     justify-content: center;
@@ -107,7 +111,6 @@ body{
 
 /* Hero/Title */
 .hero{
-    max-width: 80%;
     display: grid;
     margin: auto;
     height: 120px;
@@ -115,7 +118,7 @@ body{
     animation-name: opacity-fade-in;
     animation-duration: .6s;
 }
-.hero-logo{
+.hero-logo{ 
     height: 100%;
     display: flex;
     justify-content: center;
