@@ -7,7 +7,7 @@ function loadEditView(){
                 resolve(false);
             }
     
-            if(!drawCaseSentences("colmain", response)){
+            if(!drawCaseSentences("col-main", response)){
                 console.log("Exception trace: drawCaseSentences()");
                 resolve(false);            
             };    
@@ -35,7 +35,7 @@ function drawCaseSentences(lineColId, caseData){
         lineBtn.id = caseData[i].sentence_id;
         lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
         lineBtn.addEventListener("click", function(clickedLine){
-            if(!fillAnnotations("popoutbody", caseData, clickedLine.target.id)){
+            if(!fillAnnotations("popout-body", caseData, clickedLine.target.id)){
                 console.log("Exception trace: fillAnnotations()")
                 return false;
             };

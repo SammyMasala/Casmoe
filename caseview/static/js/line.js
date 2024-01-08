@@ -7,7 +7,7 @@ function loadLineView(){
                 resolve(false);
             }
     
-            if(!drawCaseSentences("colmain", response)){
+            if(!drawCaseSentences("col-main", response)){
                 console.log("Exception trace: drawCaseSentences()");
                 resolve(false);            
             };    
@@ -31,11 +31,11 @@ function drawCaseSentences(lineColId, caseData){
 
     for(var i in caseData){
         const lineBtn = document.createElement("div");
-        lineBtn.className = "d-block btn bg-success-subtle m-2 p-2 text-start";
+        lineBtn.className = "btn line-button";
         lineBtn.id = caseData[i].sentence_id;
         lineBtn.innerHTML = caseData[i].sentence_id+ ". " + caseData[i].text;
         lineBtn.addEventListener("click", function(clickedLine){
-            if(!fillAnnotations("popoutbody", caseData, clickedLine.target.id)){
+            if(!fillAnnotations("popout-body", caseData, clickedLine.target.id)){
                 console.log("Exception trace: fillAnnotations()")
                 return false;
             };
@@ -66,7 +66,7 @@ function fillAnnotations(annotBodyId, caseData, index){
             continue;
         }
         var newEntry = document.createElement("div");
-        newEntry.className = "row p-1";
+        newEntry.className = "row annotation";
         newEntry.innerHTML = details + ": " + lineAnnot[details];
         annotBody.appendChild(newEntry);
     }

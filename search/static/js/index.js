@@ -14,7 +14,7 @@ function addCorpusEventListener(corpusId){
                 return false;
             }
     
-            if(!createCaseList("resultlist", cases)){
+            if(!createCaseList("result", cases)){
                 console.log("Exception trace: createCaseList()");
                 return false;
             }
@@ -42,15 +42,15 @@ function createCaseList(listElementId, cases){
             continue;
         }
         
-        var newButton = document.createElement("div");
-        newButton.className = "d-block btn btn-light";
+        var newButton = document.createElement("li");
+        newButton.className = "btn case-button";
 
         newButton.value = i;
-        newButton.id = "casebutton";
+        newButton.id = "case-button";
         newButton.innerHTML = caseTitle;
         newButton.addEventListener("click", function(clickedButton){ 
             var caseIndex = clickedButton.target.value;
-            if(!caseIndex){
+            if(caseIndex != 0 && !caseIndex){
                 console.log("Exception trace: Value caseIndex not found!");
                 return false;
             }
@@ -68,12 +68,12 @@ function createCaseList(listElementId, cases){
 }
 
 function handleCaseClicked(cases, caseIndex, caseTitle){
-    if(!updateUISelectedCase("navtext", "navbutton", "", false)){
+    if(!updateUISelectedCase("indicator-case", "navigation-button", "", false)){
         console.log("Exception trace: updateUISelectedCase()");
         return false;
     }
 
-    if(!toggleCaseButton("[id='casebutton']", false)){
+    if(!toggleCaseButton("[id='case-button']", false)){
         console.log("Exception trace: toggleCaseButton()");
         return false;
     };
@@ -84,17 +84,17 @@ function handleCaseClicked(cases, caseIndex, caseTitle){
         }
 
         const runTimeout = setTimeout (function(){
-            if(!toggleCaseButton("[id='casebutton']", true)){
+            if(!toggleCaseButton("[id='case-button']", true)){
                 console.log("Exception trace: toggleCaseButton()");
                 return false;
             };
 
-            if(!updateUISelectedCase("navtext", "navbutton", caseTitle, true)){
+            if(!updateUISelectedCase("indicator-case", "navigation-button", caseTitle, true)){
                 console.log("Exception trace: updateUISelectedCase()");
                 return false;
             }   
 
-            if (!updateResultPreview("resultpreview")){
+            if (!updateResultPreview("preview")){
                 console.log("Exception trace: updateCasePreview()");
                 return false;
             }  
@@ -118,9 +118,9 @@ function toggleCaseButton(casebuttonId, state){
 
     for(let i=0;i<caseButtons.length;i++){
         if(!state){
-            caseButtons[i].className = "d-block btn btn-light disabled";
-        }else {
-            caseButtons[i].className = "d-block btn btn-light";
+            caseButtons[i].className = "btn case-button disabled";
+        }else{
+            caseButtons[i].className = "btn case-button";
         }
     }
 
@@ -147,7 +147,7 @@ function updateResultPreview(resultPreviewId){
 
         for(let i in response){
             const entry = document.createElement("div");
-            entry.className = "bg-secondary-subtle p-2 m-2 border rounded-2";
+            entry.className = "preview-line";
             entry.innerHTML = response[i].text;
 
             resultPreview.appendChild(entry);
@@ -198,6 +198,7 @@ function clearElementChildren(elemId){
         return false;
     }
 
+    element.innerHTML = "";
     var child = element.lastElementChild;
     while(child){
         element.removeChild(child);

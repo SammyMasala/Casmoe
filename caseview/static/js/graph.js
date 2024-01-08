@@ -8,12 +8,12 @@ function loadGraphView(){
                 resolve(false);
             }  
     
-            if(!addToGraphList("graphlist", drawGraphJudgeDistribution(response))){
+            if(!addToGraphList("graph-list", drawGraphJudgeDistribution(response))){
                 console.log("Exception trace: addToGraphList()");
                 resolve(false);
             }
     
-            if(!showGraphInMain("colmain", drawGraphJudgeDistribution(response), response)){
+            if(!showGraphInMain("col-main", drawGraphJudgeDistribution(response), response)){
                 console.log("Exception trace: showGraphInMain()");
                 resolve(false);
             };
@@ -30,14 +30,14 @@ function addToGraphList(graphListId, newGraph, data){
         return false;
     }
 
-    newGraph.className = "btn row p-2 border";
+    newGraph.className = "btn graph";
     newGraph.addEventListener("click", function(){
         getCaseFromDB().then((response) => {
             if(!response){
                 console.log("Exception trace: getCaseFromDB()");
             }
 
-            if(!showGraphInMain("colmain", drawGraphJudgeDistribution(response))){
+            if(!showGraphInMain("col-main", drawGraphJudgeDistribution(response))){
                 console.log("Exception trace: showGraphInMain()");
             };
         })
@@ -68,7 +68,7 @@ function drawGraphJudgeDistribution(data){
     var graphData = new GraphObj(data);    
 
     var graphElem = document.createElement("canvas");
-    graphElem.className = "row p-2 border";
+    graphElem.className = "row graph";
     graphElem.id = "distribution";
     
     new Chart(

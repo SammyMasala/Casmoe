@@ -6,12 +6,12 @@ function loadSummaryView(){
                 resolve(false);
             }
     
-            if(!drawCaseSentences("colmain", response)){
+            if(!drawCaseSentences("col-main", response)){
                 console.log("Exception trace: drawCaseSentences!");
                 resolve(false);
             }   
     
-            if(!showGraphInMain("graphpreview", drawGraphJudgeDistribution(response))){
+            if(!showGraphInMain("graph-preview", drawGraphJudgeDistribution(response))){
                 console.log("Exception trace: showGraphInMain()");
                 resolve(false);
             };

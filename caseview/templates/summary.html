@@ -21,30 +21,40 @@
 {% endblock %}
 
 {% block content %}        
-<!-- Navbar -->
-    <nav class="navbar m-auto navbar-expand-md bg-light border textlogo">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="btn btn-light border-end" type="button" id="navbarBtnOverview" onclick="goToSummary()">Overview</li>
-                    <li class="btn btn-light border-end"  type="button" id="navbarBtnLine" onclick="goToLine()">Line</li>
-                    <li class="btn btn-light border-end" type="button" id="navbarBtnGraph" onclick="goToGraph()">Graph</li>
-                </ul>
-            </div>                
-        </div>
-    </nav>
+    <!-- Section: Navbar -->
+    <div class="container-fluid search-view">
+        <section id="navbar" class="navbar navbar-expand-md" role="navigation">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="btn navbar-button" type="button" id="navbarBtnOverview" onclick="goToSummary()">
+                            Overview
+                        </li>
+                        <li class="btn navbar-button"  type="button" id="navbarBtnLine" onclick="goToLine()">
+                            Line
+                        </li>
+                        <li class="btn navbar-button" type="button" id="navbarBtnGraph" onclick="goToGraph()">
+                            Graph
+                        </li>
+                    </ul>
+                </div>                
+            </div>
+        </section>
+        <!-- End Section: Navbar -->
 
-    <!-- Summary Content -->
-    {% block view %}
-    <div class="row border m-auto">
-        <div class="col-8 border overflow-hidden textlogo" id="colmain">
+        <!-- Section: Summary -->
+        {% block view %}
+        <section id="summary" class="row summary">
+            <ol class="col col-main" id="col-main">
+            </ol>
+            <div class="col-4 graph-preview" id="graph-preview">
+            </div>
         </div>
-        <div class="col-4 bg-light border textlogo" id="graphpreview">
-        </div>
+        {% endblock %}
+        <!-- End Section: Summary -->
     </div>
-    {% endblock %}
 {% endblock %}
 

@@ -19,16 +19,18 @@
 {% endblock %}
 
 {% block view %}        
-    <!-- Graph Content -->
-    <div class="row border m-auto">
-        <div class="col-8 border overflow-hidden textlogo" id="colmain">
+    <!-- Section: Graph Content -->
+    <section id="summary" class="row summary">
+        <div class="row graph-highlighted">
+            <div class="col col-main" id="col-main">
+            </div>
+            <div class="col-4 popout-body" id="popout-body">
+            </div>
         </div>
-        <div class="col-4 bg-light border textlogo" id="popoutbody">
+        <div class="row graph-list" id="graph-list">            
         </div>
-    </div>
-    <div class="row border m-auto p-2">
-        <div class="d-flex justify-content-center" id="graphlist"></div>
-    </div>
+    </div>    
+    <!-- End Section: Graph Content -->
 {% endblock %}
 
 
