@@ -57,8 +57,14 @@
     <!-- Section: To Case View -->                
     <section id="to-case-view" class="row" aria-describedby="indicator-case" aria-labelledby="navigation-button">
         <div class="container-fluid to-case-view">
-            <label for="navigation-button" class="indicator-case" id="indicator-case"> Selected Case: None</label>
-            <button type="button" class="btn disabled" id="navigation-button" role="navigation" onclick="goToSummary()">Step 2. Go To Case -></button>
+            <div class="row">
+                <div class="col-8">
+                    <label for="navigation-button" class="indicator-case" id="indicator-case"> Selected Case: None</label>
+                </div>
+                <div class="col">
+                    <nav type="button" class="btn disabled navigation-button" id="navigation-button" role="navigation" onclick="goToSummary()">Step 2. Go To Case -></nav>
+                </div>               
+            </div>
         </div>
     </section>
     <!-- End Section: To Case View -->

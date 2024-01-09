@@ -255,6 +255,30 @@ body{
     margin: 10px;
 }
 
+.to-case-view{
+    margin: 5px;
+    padding: 10px;
+}
+
+.navigation-button{
+    border-style: solid;
+    border-color: var(--default-color-text);
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.navigation-button, .indicator-case{
+    width: 90%;
+    display: flex;
+    margin: auto;
+    padding: 5px;
+    color: var(--default-color-text);
+}
+
+.navigation-button{
+    background-color: var(--default-color);
+}
+
 /********** Search View ***********/
 
 .search-view{
@@ -293,7 +317,7 @@ body{
     height: 700px;
 }
 
-.col-main{
+.col-main{    
     height: 100%;
     overflow: auto;
 }
