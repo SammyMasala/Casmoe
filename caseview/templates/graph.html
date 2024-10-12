@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends 'summary.html' %}
+{% load static %}
+
+{% block addscript %}
+<script src="{% static './js/caseview.js' %}"></script>
+<script src="{% static './js/classes.js' %}"></script>
+<script src="{% static './js/graph.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        loadGraphView().then((response) => {
+            if(!response){
+                console.log("Exception trace: loadCaseView()");
+                return;
+            };
+        });
+    });
+</script>
+{% endblock %}
+
+{% block view %}        
+    <!-- Section: Graph Content -->
+    <section id="summary" class="row summary">
+        <div class="row graph-highlighted">
+            <div class="col col-main" id="col-main" aria-label="Highlighted Graph">
+            </div>
+            <div class="col-4 popout-body" id="popout-body" aria-label="Graph Breakdown">
+            </div>
+        </div>
+        <div class="row graph-list" id="graph-list" aria-label="List of Graphs">            
+        </div>
+    </div>    
+    <!-- End Section: Graph Content -->
+{% endblock %}
+
+

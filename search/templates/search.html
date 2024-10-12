@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% extends 'frame_index.html' %}
+{% load static %}
+
+{% block addscript %}
+<script src="{% static './js/index.js' %}?99"></script>
+<script>
+    this.addEventListener("load", function(){
+        if(!addCorpusEventListener("corpus-field")){
+            console.log("Exception trace: addCorpusEventListen()");
+            return;
+        }
+    });
+</script>
+{% endblock %}
+
+{%block content %}
+    <!-- Section: Hero -->
+    <section id="hero" class="row search-hero">
+        <div class="container-fluid search-logo">
+            <img src="{% static './img/search-icon.png' %}" class="img-fluid" alt="search-icon">
+        </div>
+        <div class="container-fluid search-input">
+            <label for="corpusfield" id="search-label" class="search-label">Step 1. Select .csv file:</label>
+            <div class="input-group" aria-labelledby="search-label" role="search">
+                <input type="file" class="form-control" id="corpus-field" accept=".csv" placeholder="File Directory...">
+            </div>
+        </div>
+    </section>
+    <!-- End Section: Hero -->
+    <!-- Section: Case List -->
+    <section id="case-list" class="row">
+        <div class="container-fluid ">
+            <div class="row case-list">
+                <div class="col result-list" id="result-list">
+                    <label for="result" class="result-label">
+                        Case List:
+                    </label>
+                    <ol id="result" class="result">
+                        <li>-- Cases shown here -- </li>
+                    </ol>
+                </div>                
+                <div class="col-4 case-preview" aria-labelledby="preview-label" aria-describedby="preview">
+                    <label for="case-preview" class="preview-label">
+                        Case Preview:
+                    </label>
+                    <div class="preview" id="preview">
+                        <div>
+                            -- Preview here --
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Section: Case List -->
+    <!-- Section: To Case View -->                
+    <section id="to-case-view" class="row" aria-describedby="indicator-case" aria-labelledby="navigation-button">
+        <div class="container-fluid to-case-view">
+            <div class="row">
+                <div class="col-8">
+                    <label for="navigation-button" class="indicator-case" id="indicator-case"> Selected Case: None</label>
+                </div>
+                <div class="col">
+                    <nav type="button" class="btn disabled navigation-button" id="navigation-button" role="navigation" onclick="goToSummary()">Step 2. Go To Case -></nav>
+                </div>               
+            </div>
+        </div>
+    </section>
+    <!-- End Section: To Case View -->
+{% endblock %}
+

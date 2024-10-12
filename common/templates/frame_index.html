@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en-GB" xml:lang="en-GB">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Casmoe - Review(Editor)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <link rel="stylesheet" href="{% static './css/styles.css' %}?100">
+        <script src="{% static './js/ajax_handler.js' %}"></script>
+        <script src="{% static './js/file_handler.js' %}"></script>
+        <script src="{% static './js/nav.js' %}"></script>
+        {% block addscript %}
+        {% endblock %}
+    </head>
+
+    <body palette-theme="dark">
+        <div class="container-fluid">
+            <!-- Header -->
+            {% block header %}
+            <header id="header" class="row header">
+                <div class="container-fluid header-text" role="navigation" aria-label="Go to Home" type="button" onclick="goToHome()">
+                    Case ASMO Editor
+                </div>
+            </header>        
+            {% endblock %}
+            <!-- End Header -->
+
+            <!-- Content -->
+            <main id="content" class="container-fluid" role="main">
+                {% block content %}
+                {% endblock %}
+            </main>
+            
+            <!-- Footer  -->
+            {% block footer %}
+            <footer id="footer" class="row footer">
+                <div class="container-fluid footer-text">
+                    Developed by Samuel (ft19226@bristol.ac.uk). Updated July 2023
+                </div>
+            </footer>
+            {% endblock %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'frame_index.html' %}
+{% load static %}
+
+{% block addscript %}
+<script src="{% static './js/caseview.js' %}"></script>
+<script src="{% static './js/summary.js' %}"></script>
+<script src="{% static './js/classes.js' %}"></script>
+<script src="{% static './js/line.js' %}"></script>
+<script src="{% static './js/graph.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        loadSummaryView().then((response) => {
+            if(!response){
+                console.log("Exception trace: loadCaseView()");
+                return;
+            };
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}        
+    <!-- Section: Navbar -->
+    <div class="container-fluid search-view">
+        <section id="navbar" class="navbar navbar-expand-md" role="navigation">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="btn navbar-button" type="button" id="navbarBtnOverview" aria-label="Summary View" onclick="goToSummary()">
+                            Overview
+                        </li>
+                        <li class="btn navbar-button"  type="button" id="navbarBtnLine" aria-label="Line View" onclick="goToLine()">
+                            Line
+                        </li>
+                        <li class="btn navbar-button" type="button" id="navbarBtnGraph" aria-label="Graph View" onclick="goToGraph()">
+                            Graph
+                        </li>
+                    </ul>
+                </div>                
+            </div>
+        </section>
+        <!-- End Section: Navbar -->
+
+        <!-- Section: Summary -->
+        {% block view %}
+        <section id="summary" class="row summary">
+            <ol class="col col-main" id="col-main" aria-label="Line Content">
+            </ol>
+            <div class="col-4 graph-preview" id="graph-preview" aria-label="Graph Preview">
+            </div>
+        </div>
+        {% endblock %}
+        <!-- End Section: Summary -->
+    </div>
+{% endblock %}
+

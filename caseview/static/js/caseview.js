@@ -1,12 +1,4 @@
-"use strict"
-
-this.addEventListener("load", function(){
-    if(!loadLineView()){
-        console.log("Exception trace: loadCaseView()");
-        return;
-    };
-});
-
+"use strict";
 function clearChild(elemId){
     var elem = document.getElementById(elemId)
     if(!elem){

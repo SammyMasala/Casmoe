@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends 'summary.html' %}
+{% load static %}
+
+{% block addscript %}
+<script src="{% static './js/line.js' %}"></script>
+<script src="{% static './js/caseview.js' %}"></script>
+<script>
+    this.addEventListener("load", function(){
+        loadLineView().then((response) => {
+            if(!response){
+                console.log("Exception trace: loadCaseView()");
+                return;
+            };
+        });
+    });
+</script>
+{% endblock %}
+
+{% block view %}
+    <!-- Section: Line Content -->
+    <section id="summary" class="row summary">
+        <ol class="col col-main" id="col-main" aria-label="Line-Content">
+        </ol>
+        <div class="col-4 popout-body" id="popout-body" aria-label="Annotation Breakdown">
+        </div>
+    </div>
+    <!-- End Section: Line Content -->
+{% endblock %}
+

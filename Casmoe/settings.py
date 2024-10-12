@@ -33,10 +33,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'edit.apps.EditConfig',
+    'home.apps.HomeConfig',
+    'review.apps.ReviewConfig',
     'test.apps.TestConfig',
     'caseview.apps.CaseViewConfig',
-    'home.apps.HomeConfig',
+    'search.apps.SearchConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +61,12 @@ ROOT_URLCONF = 'Casmoe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "common/templates/",
+            "home/templates/",
+            "search/templates/",
+            "caseview/templates/",
+            "review/templates/",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,10 +129,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / "files/static/",
+STATICFILES_DIRS = [BASE_DIR / "common/static/",
                     "home/static/",
+                    "search/static/",
                     "caseview/static/",
-                    "edit/static/",]
+                    ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
