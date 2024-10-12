@@ -61,7 +61,7 @@ ROOT_URLCONF = 'Casmoe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "files/templates/",
+        'DIRS': [BASE_DIR / "common/templates/",
             "home/templates/",
             "search/templates/",
             "caseview/templates/",
@@ -129,7 +129,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / "files/static/",
+STATICFILES_DIRS = [BASE_DIR / "common/static/",
                     "home/static/",
                     "search/static/",
                     "caseview/static/",
