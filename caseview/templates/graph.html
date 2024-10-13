@@ -8,7 +8,7 @@
 <script src="{% static './js/graph.js' %}"></script>
 <script>
     this.addEventListener("load", function(){
-        loadGraphView().then((response) => {
+        loadGraphView("{{ case_id }}").then((response) => {
             if(!response){
                 console.log("Exception trace: loadCaseView()");
                 return;

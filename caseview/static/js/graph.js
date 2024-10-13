@@ -1,10 +1,10 @@
 "use strict";
 
-function loadGraphView(){
+function loadGraphView(case_id){
     return new Promise((resolve) => {
-        getCaseFromDB().then((response) => {
+        getCaseFromDB(case_id).then((response) => {
             if(!response){
-                console.log("Exception trace: getCaseFromDB()");
+                console.log("Exception trace: legacyGetCaseFromDB()");
                 resolve(false);
             }  
     
@@ -32,9 +32,9 @@ function addToGraphList(graphListId, newGraph, data){
 
     newGraph.className = "btn graph";
     newGraph.addEventListener("click", function(){
-        getCaseFromDB().then((response) => {
+        legacyGetCaseFromDB().then((response) => {
             if(!response){
-                console.log("Exception trace: getCaseFromDB()");
+                console.log("Exception trace: legacyGetCaseFromDB()");
             }
 
             if(!showGraphInMain("col-main", drawGraphJudgeDistribution(response))){

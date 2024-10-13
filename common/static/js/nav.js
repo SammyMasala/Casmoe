@@ -25,14 +25,14 @@ function goToReview(){
     window.location.href='/Review/';
 }
 
-function goToGraph(){
-    window.location.href='/Case-View/Graph/';
+function goToGraph(case_id){
+    window.location.href=`/Case-View/Graph/${case_id}`;
 }
 
-function goToLine(){
-    window.location.href='/Case-View/Line/';
+function goToLine(case_id){
+    window.location.href=`/Case-View/Line/${case_id}`;
 }
 
-function goToSummary(){
-    window.location.href='/Case-View/Summary/';
+function goToSummary(case_id){
+    window.location.href=`/Case-View/Summary/${case_id}`;
 }

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.search_page, name='Search-Page'),
     path('Save-Case/', views.save_case),
+    path("case/<str:case_id>/", views.get_case),
     path('save/', views.save),
     path('list/', views.list_cases)
 ]

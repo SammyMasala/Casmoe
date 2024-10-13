@@ -13,7 +13,12 @@ def list_cases(request: HttpRequest):
     if request.method == "GET":
         cases = list(CaseLine.objects.filter(role="<new-case>").values())
         return JsonResponse(cases, safe=False)
-
+    
+def get_case(request: HttpRequest, case_id: str):
+    print(case_id)
+    if request.method == "GET":
+        cases = list(CaseLine.objects.filter(case_id=case_id).values())
+        return JsonResponse(cases, safe=False)
    
 def save(request: HttpRequest):
     if request.method == "POST" and 'case_data' in request.POST:

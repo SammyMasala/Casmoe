@@ -1,6 +1,6 @@
-function loadSummaryView(){
+function loadSummaryView(case_id){
     return new Promise((resolve) => {
-        getCaseFromDB().then((response) => {
+        getCaseFromDB(case_id).then((response) => {
             if(!response){
                 console.log("Exception trace: No caseData retrieved!");
                 resolve(false);

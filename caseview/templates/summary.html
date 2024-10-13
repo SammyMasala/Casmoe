@@ -10,7 +10,7 @@
 <script src="{% static './js/graph.js' %}"></script>
 <script>
     this.addEventListener("load", function(){
-        loadSummaryView().then((response) => {
+        loadSummaryView("{{ case_id }}").then((response) => {
             if(!response){
                 console.log("Exception trace: loadCaseView()");
                 return;

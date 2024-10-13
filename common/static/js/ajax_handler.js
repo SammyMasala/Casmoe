@@ -119,7 +119,60 @@ function postLineChangetoDB(formData){
     });         
 }
 
-function getCaseFromDB(){
+function getCaseListFromDB(){
+    return new Promise((resolve) => {
+        var csrf = getCookie('csrftoken');
+
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url:"/Search/list/",
+                headers: {
+                    'X-CSRFToken': csrf
+                },
+
+                success: function (response){
+                    // console.log("Retrieved case data!");
+                    resolve(response);
+                },
+
+                error: function () {
+                    alert("Failed to read file from database! See error log...");
+                    return;
+                }
+            });
+        });
+    });    
+}
+
+function getCaseFromDB(case_id){
+    return new Promise((resolve) => {
+        var csrf = getCookie('csrftoken');
+
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url:`/Search/case/${case_id}`,
+                headers: {
+                    'X-CSRFToken': csrf
+                },
+
+                success: function (response){
+                    // console.log("Retrieved case data!");
+                    resolve(response);
+                },
+
+                error: function () {
+                    alert("Failed to read file from database! See error log...");
+                    return;
+                }
+            });
+        });
+    });    
+}
+
+// LEGACY
+function legacyGetCaseFromDB(){
     return new Promise((resolve) => {
         var csrf = getCookie('csrftoken');
 

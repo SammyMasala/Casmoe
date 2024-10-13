@@ -5,18 +5,17 @@ from search.models import CaseLine
 def summary_page_editor(request):    
     return render(request, "line_EDITOR.html")
 
-def summary_page(request):    
-    return render(request, "summary.html")
+def summary_page(request, case_id:str):  
+    context = {"case_id": case_id}  
+    return render(request, "summary.html", context)
 
-def graph_page(request):    
-    return render(request, "graph.html")
+def graph_page(request, case_id:str):    
+    context = {"case_id": case_id}  
+    return render(request, "graph.html", context)
 
-def case_page(request):    
-    return render(request, "line.html")
-
-def get_case(request):
-    data = list(CaseLine.objects.all().values())
-    return JsonResponse(data, safe=False)
+def case_page(request, case_id:str):  
+    context = {"case_id": case_id}    
+    return render(request, "line.html", context)
 
 def save_change(request):
     if request.method == "POST":
