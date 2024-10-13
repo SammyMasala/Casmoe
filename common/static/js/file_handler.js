@@ -1,5 +1,39 @@
 "use strict";
 
+function getCaseLines(fileElemId){
+    return new Promise(function(resolve){
+        var cases = "";
+        const csv = document.getElementById(fileElemId);
+        if(!csv){
+            console.log("Exception trace: Element csv not found!");
+            resolve (cases);
+        }
+        
+        var file = csv.files[0];
+        if(!file){
+            console.log("Exception trace: No file found!");
+            resolve (cases);
+        }else if (file.type != "text/csv"){
+            console.log("Exception trace: Incorrect file type!");
+            resolve (cases);
+        }
+    
+        readCSVFile(file).then((response) => {
+            if(!setHeaders(response)){
+                console.log("Exception trace: setHeaders()");
+                resolve (cases);
+            }
+            var caseLines = stringToCaseLines(response);
+            if(!caseLines){
+                console.log("Exception trace: stringToCaseLines()");
+                resolve (caseLines);
+            }
+            resolve (caseLines);
+        });
+    });
+}
+
+
 function getCases(fileElemId){
     return new Promise(function(resolve){
         var cases = "";
@@ -23,9 +57,9 @@ function getCases(fileElemId){
                 console.log("Exception trace: setHeaders()");
                 resolve (cases);
             }
-            var cases = stringToArray(response);
+            var cases = stringToCaseArray(response);
             if(!cases){
-                console.log("Exception trace: stringtoArray()");
+                console.log("Exception trace: stringToCaseArray()");
                 resolve (cases);
             }
             resolve (cases);
@@ -52,7 +86,25 @@ function setHeaders(fileString){
 }
 
 //Writes csv to JS array.
-function stringToArray(caseString){  
+function stringToCaseArray(caseString){  
+    var cases = "";
+
+    var caseRows = stringToCaseLines(caseString); 
+    if(!caseRows){
+        console.log("Exception trace: splitRows()");
+        return cases;
+    }
+
+    var cases = splitCases(caseRows);
+    if(!cases){
+        console.log("Exception trace: splitCases()");
+        return cases;
+    }
+
+    return cases;
+}
+
+function stringToCaseLines(caseString){  
     var cases = "";
 
     var caseRows = splitRows(caseString); 
@@ -74,13 +126,7 @@ function stringToArray(caseString){
         return cases;
     }
 
-    var cases = splitCases(caseRows);
-    if(!cases){
-        console.log("Exception trace: splitCases()");
-        return cases;
-    }
-
-    return cases;
+    return caseRows;
 }
 
 function splitRows(caseString){

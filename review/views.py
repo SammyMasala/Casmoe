@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from caseview.models import Changes
+from review.models import Changes
 
 def review_page(request):    
     return render(request, "review.html")

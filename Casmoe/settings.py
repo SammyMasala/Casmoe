@@ -130,7 +130,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / "common/static/",
-                    "home/static/",
                     "search/static/",
                     "caseview/static/",
                     ]
@@ -144,4 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # MODIFICATION: Max number of data fields for POST requests
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 4096
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 30000
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760 # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760 # 10MB

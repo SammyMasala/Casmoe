@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from search.models import CaseLine
-from .models import Changes
 
 def summary_page_editor(request):    
     return render(request, "line_EDITOR.html")
@@ -25,13 +24,13 @@ def save_change(request):
         print("request")
         data = request.POST
 
-        outdated = Changes.objects.filter(case_id=data['case_id'])
+        outdated = CaseLine.objects.filter(case_id=data['case_id'])
         outdated = outdated.filter(sentence_id=data['sentence_id'])
 
         for item in outdated:
             item.delete()
         
-        entry = Changes.objects.create(
+        entry = CaseLine.objects.create(
             case_id=data["case_id"],
             asmo=data["asmo"],
             asmo_sent_id=data["asmo_sent_id"],

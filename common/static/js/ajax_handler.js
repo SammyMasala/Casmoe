@@ -15,6 +15,41 @@ function getCookie(name){
     return cookieValue;
 }
 
+function postCaseLinestoDB(caseLines){    
+
+    return new Promise((resolve) => {
+        var csrf = getCookie('csrftoken');
+        if(!csrf){
+            console.log("Exception trace: getCookie()");
+            return false;
+        }
+
+        $(document).ready(function(){
+            $.ajax({
+                type: "POST",
+                url:"/Search/save/",
+                headers: {
+                    'X-CSRFToken': csrf,
+                },
+                data:{"case_data": JSON.stringify(caseLines)},
+                success: function (response){
+                    console.log("Callback received: ", response.message);
+                    resolve(true);                    
+                },
+
+                error: function (response) {
+                    alert("Failed to save to Django! See console...");
+                    console.log("Callback received: ", response.message);
+                    resolve(false);
+                }
+            });
+        });
+        resolve(false);
+    });         
+}
+
+
+// Legacy
 function postCasetoDB(selectedCase){    
     return new Promise((resolve) => {
         var csrf = getCookie('csrftoken');

@@ -8,11 +8,33 @@ function addCorpusEventListener(corpusId){
     }
     corpus.value = null;
     corpus.addEventListener("change", function(){
+        getCaseLines(corpusId).then((caseLines) => {
+            if(!caseLines){
+                console.log("Exception trace: getCasesFromFile()");
+                return false;
+            }
+
+            console.log(caseLines)
+            if(!postCaseLinestoDB(caseLines)){
+                console.log("Exception trace: postCaseLinestoDB()");
+                return false;
+            }
+            return true
+
+    
+            // if(!createCaseList("result", cases)){
+            //     console.log("Exception trace: createCaseList()");
+            //     return false;
+            // }
+        })   
+
+        // Legacy
         getCases(corpusId).then((cases) => {
             if(!cases){
                 console.log("Exception trace: getCasesFromFile()");
                 return false;
             }
+
     
             if(!createCaseList("result", cases)){
                 console.log("Exception trace: createCaseList()");
@@ -55,10 +77,7 @@ function createCaseList(listElementId, cases){
                 return false;
             }
 
-            if(!handleCaseClicked(cases, caseIndex, clickedButton.target.innerHTML)){
-                console.log("Exception trace: handleCaseClicked()");
-                return false;
-            }                          
+            handleCaseClicked(cases, caseIndex, clickedButton.target.innerHTML)                        
         });
 
         listElement.appendChild(newButton);
@@ -79,9 +98,9 @@ function handleCaseClicked(cases, caseIndex, caseTitle){
     };
 
     postCasetoDB(cases[caseIndex]).then((response) => {         
-        if(!response){
-            console.log("Exception trace: writeCasetoDjango()");
-        }
+        // if(!response){
+        //     console.log("Exception trace: postCasetoDB()");
+        // }
 
         const runTimeout = setTimeout (function(){
             if(!toggleCaseButton("[id='case-button']", true)){

@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+from search.models import CaseLine
+
+class Changes (CaseLine):
+    pass
